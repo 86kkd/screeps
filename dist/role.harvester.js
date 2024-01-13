@@ -13,7 +13,7 @@ var roleHarvester = {
                 creep.moveTo(sources[1], {visualizePathStyle: {stroke: '#ffaa00'}});
             }
         }
-        else if(spawn.store.getFreeCapacity(RESOURCE_ENERGY)){
+        else if(spawn.store.getFreeCapacity(RESOURCE_ENERGY)&&Game.screeps['extension'].store.getFreeCapacity(RESOURCE_ENERGY)){
             var targets = creep.room.find(FIND_STRUCTURES, {
                     filter: (structure) => {
                         return (structure.structureType == STRUCTURE_EXTENSION || 

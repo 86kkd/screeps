@@ -1,0 +1,9 @@
+{
+    "version": "2.0.0",
+    "tasks": [{
+        "label": "upload_screeps",
+        "command": "grunt", // Could be any other shell command
+        "args": ["screeps"],
+        "type": "shell"
+    }]
+}

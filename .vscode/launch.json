@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "upload",
+            "type": "node",
+            "request": "launch",
+            "preLaunchTask": "upload_screeps",
+            "program": "${workspaceFolder}/dist/main.js",
+        },
+        
+    ]
+}
