@@ -9,11 +9,11 @@ var roleHarvester = {
 
 	    if(creep.store.getFreeCapacity() > 0&&!creep.memory.building) {
             var sources = creep.room.find(FIND_SOURCES);
-            if(creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[1], {visualizePathStyle: {stroke: '#ffaa00'}});
+            if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
             }
         }
-        else if(spawn.store.getFreeCapacity(RESOURCE_ENERGY)&&Game.screeps['extension'].store.getFreeCapacity(RESOURCE_ENERGY)){
+        else if(spawn.store.getFreeCapacity(RESOURCE_ENERGY)){
             var targets = creep.room.find(FIND_STRUCTURES, {
                     filter: (structure) => {
                         return (structure.structureType == STRUCTURE_EXTENSION || 
@@ -26,8 +26,7 @@ var roleHarvester = {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             }
-        }
-        else{
+            else{
             creep.memory.building = true;
             var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
             if(targets.length) {
@@ -36,6 +35,8 @@ var roleHarvester = {
                 }
             }
         }
+        }
+        
         
 	}
 };
