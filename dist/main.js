@@ -1,21 +1,23 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
-var {creep_counter,room_targets,init_serval_workers}= require('function');
+var {creep_counter,room_targets,init_serval_workers,group}= require('function');
 
 const creep_type = ["harvester","upgrader","builder"];
 
 var spawn=Game.spawns['Spawn1'];
 // TODO开采地区选择
 var source_to_harvest={
-    builder1_source:0
+    builder1_source:1
 };
-
+//TODO rewrite creep_counter and finish group
+//TODO if no source get another source
+//TODO fix route
 module.exports.loop = function () {
 
     var counter = creep_counter.count();
 //    console.log(counter.harvester+'counter.harvester');
-    console.log(spawn.room.controller);
+    console.log(spawn.room.controller.level);
     init_serval_workers(spawn,counter);
     for(var name in Game.creeps) {
         
