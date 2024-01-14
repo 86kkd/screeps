@@ -21,8 +21,38 @@ var creep_counter = {
   }
 };
 
+var room_targets = {
 
-module.exports = creep_counter;
-
-
+  source_target:null,
   
+  /** @param {Creep} creep **/
+  search: (creep) =>{
+    // console.log('bug here');
+    this.source_target = creep.room.find(FIND_SOURCES);
+    // console.log('bug not here');
+    return this;   
+  }
+};
+
+/**
+ * @param {spawn} spawn 
+ * @param {*} counter 
+ */
+function init_serval_workers (spawn,counter){
+  if(counter.harvester<3){
+          spawn.spawnCreep( [WORK,WORK,CARRY,MOVE],'Harvester'
+          +(counter.harvester+1), { memory: { role: 'harvester' } } );
+      }
+      else if(counter.upgrader<3){
+          spawn.spawnCreep( [WORK,WORK,CARRY,MOVE],'Upgrader'
+          +(counter.upgrader+1),{memory:{role:'upgrader'}});
+      }
+      else if(counter.builder<5||spawn.store.getFreeCapacity()){
+          spawn.spawnCreep( [WORK,WORK,CARRY,MOVE],'Builder'
+          +(counter.builder+1),{memory:{role:'builder'}});
+          // console.log('spawnCreep signal '+success);
+      }
+
+};
+
+module.exports = {creep_counter,room_targets,init_serval_workers};

@@ -1,30 +1,22 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
-var creep_counter = require('function')
+var {creep_counter,room_targets,init_serval_workers}= require('function');
+
 const creep_type = ["harvester","upgrader","builder"];
 
 var spawn=Game.spawns['Spawn1'];
 // TODO开采地区选择
-
+var source_to_harvest={
+    builder1_source:0
+};
 
 module.exports.loop = function () {
 
     var counter = creep_counter.count();
 //    console.log(counter.harvester+'counter.harvester');
-    if(counter.harvester<3){
-        spawn.spawnCreep( [WORK,WORK,CARRY,MOVE],'Harvester'
-        +(counter.harvester+1), { memory: { role: 'harvester' } } );
-    }
-    else if(counter.upgrader<3){
-        spawn.spawnCreep( [WORK,WORK,CARRY,MOVE],'Upgrader'
-        +(counter.upgrader+1),{memory:{role:'upgrader'}});
-    }
-    else if(counter.builder<5||spawn.store.getFreeCapacity()){
-        spawn.spawnCreep( [WORK,WORK,CARRY,MOVE],'Builder'
-        +(counter.builder+1),{memory:{role:'builder'}});
-        // console.log('spawnCreep signal '+success);
-    }
+    console.log(spawn.room.controller);
+    init_serval_workers(spawn,counter);
     for(var name in Game.creeps) {
         
         var creep = Game.creeps[name];
@@ -32,7 +24,10 @@ module.exports.loop = function () {
             console.log(creep.memory.role + " is not in creep_type")
         }
         if(creep.memory.role == 'harvester') {
-            roleHarvester.run(creep);
+            var targets = room_targets.search(creep);
+            // console.log(source_to_harvest.builder1_source);
+            roleHarvester.run(creep,
+                targets.source_target[source_to_harvest.builder1_source]);
         }
         if(creep.memory.role == 'upgrader') {
             roleUpgrader.run(creep);
