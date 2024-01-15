@@ -14,7 +14,7 @@ var creep_counter = {
     for(var name in Game.creeps){
       if(name.includes('harvester')) {
         this.harvester += 1;
-    //    console.log(this.harvester+'this.harvester');
+    //    sys_log(this.harvester+'this.harvester');
       }
       else if(name.includes('upgrader')) this.upgrader = 1+this.upgrader;
       else if(name.includes('builder')) this.builder = 1+this.upgrader;
@@ -29,9 +29,9 @@ var room_targets = {
   
   /** @param {Creep} creep **/
   search: (creep) =>{
-    // console.log('bug here');
+    // sys_log('bug here');
     this.source_target = creep.room.find(FIND_SOURCES);
-    // console.log('bug not here');
+    // sys_log('bug not here');
     return this;   
   }
 };
@@ -44,7 +44,7 @@ function auto_name_spawn(spawn,
   var number = 0;
   var result = 0;
   do{
-    // console.log("finall spawn"+ screep_role);
+    // sys_log("finall spawn"+ screep_role);
     result = spawn.spawnCreep(body,screep_role+number,
     {memory:{role:screep_role,group:scree_group}});
     number ++;
@@ -57,31 +57,31 @@ function auto_name_spawn(spawn,
  * @param {*} counter 
  */
 function init_serval_workers (spawn,counter){
-  console.log("alive screeps:\nharvester"+counter.harvester+"\n"+
+  sys_log("alive screeps:\nharvester"+counter.harvester+"\n"+
               "upgrader" + counter.upgrader+'\n'+
               "builder" + counter.builder + '\n'
               );
-  if(counter.harvester<3){
+  if(counter.harvester<5){
     var result = auto_name_spawn(spawn,"harvester",group,
     [WORK,WORK,CARRY,MOVE]);
     counter.harvester+=1;
-    console.log("spawn Harvester"+(counter.harvester+1)+
+    sys_log("spawn Harvester"+(counter.harvester+1)+
     " result: " + result);
   }
   else if(counter.upgrader<6){
     var result = auto_name_spawn(spawn,"upgrader",group,
     [WORK,WORK,CARRY,MOVE]);
     counter.upgrader+=1;
-    console.log("spawn Upgrader"+(counter.upgrader+1)+
+    sys_log("spawn Upgrader"+(counter.upgrader+1)+
     " result: " + result);
   }
-  else if(counter.builder<5||spawn.store.getFreeCapacity()){
+  else if(counter.builder<2){
     var result = auto_name_spawn(spawn,"builder",group,
     [WORK,WORK,CARRY,MOVE]);
     counter.builder+=1;
-    console.log("spawn Builder"+(counter.upgrader+1)+
+    sys_log("spawn Builder"+(counter.upgrader+1)+
     " result: " + result);
-      // console.log('spawnCreep signal '+success);
+      // sys_log('spawnCreep signal '+success);
   }
 
 };
@@ -92,9 +92,12 @@ var group = {
     large:9,
     group_id :0,
     getid: () =>{
-      console.log("the "+group+1+'th group for'+ work + " is ready");
+      sys_log("the "+group+1+'th group for'+ work + " is ready");
       return this.group_id+=1;
     }
 
 };
-module.exports = {creep_counter,room_targets,init_serval_workers,group};
+function sys_log(str){
+  console.log(str)
+}
+module.exports = {creep_counter,room_targets,init_serval_workers,group,sys_log};
