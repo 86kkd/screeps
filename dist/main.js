@@ -17,26 +17,12 @@ tower1:"65a46e27f7c07dfd1c571830"
 
 //TODO rewrite creep_counter and finish group
 //TODO if no source get another source
-//TODO fix route
 //TODO leve 1 and level 2
-//room.controller.activateSafeMode(); most important
+//Game.spawns['Spawn1'].room.controller.activateSafeMode(); most important
 // construct preority
 
 // Game.spawns['Spawn1'].room.createConstructionSite( 23, 22, STRUCTURE_TOWER ); 
-// var tower = Game.getObjectById('99bcc4de92959f3212df8936');
-// if(tower) {
-//     var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-//         filter: (structure) => structure.hits < structure.hitsMax
-//     });
-//     if(closestDamagedStructure) {
-//         tower.repair(closestDamagedStructure);
-//     }
 
-//     var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-//     if(closestHostile) {
-//         tower.attack(closestHostile);
-//     }
-// }
 module.exports.loop = function () {
 
     var counter = creep_counter.count();

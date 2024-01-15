@@ -1,5 +1,3 @@
-const { run } = require("./role.harvester");
-
 var creep_counter = {
     
   harvester : 0,

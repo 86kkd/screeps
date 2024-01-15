@@ -1,20 +1,25 @@
-// var {creep_counter,room_targets,init_serval_workers,group,sys_log} = rquire("function")
+var sys_log = require("function").sys_log;
 
 var roleTower = {
     run:(tower_id)=>{
         var tower = Game.getObjectById(tower_id);
         if(tower) {
             var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-                filter: (structure) => structure.hits < structure.hitsMax
+                filter: (structure) => {
+                        if(structure.structureType == "constructedWall"||
+                            structure.structureType == "rampart"){
+                                return structure.hits<5000;
+                            }
+                        else{
+                            return structure.hits < structure.hitsMax;
+                        }
+                    
+                }
             });
-            if((closestDamagedStructure.structureType == "constructeWall"&&
-                closestDamagedStructure.hits<1000)||
-                (closestDamagedStructure.structureType =="rampart"||
-                closestDamagedStructure.hits<1000)) {
-                tower.repair(closestDamagedStructure);
-            }
-            else if(closestDamagedStructure.structureType != 'constructedWall'&&
-                closestDamagedStructure.structureType != 'rampart' ){
+            if(closestDamagedStructure) {
+                sys_log("tower repairing "+closestDamagedStructure+","+
+                closestDamagedStructure.hits+","+
+                (closestDamagedStructure.structureType =="constructedWall"));
                 tower.repair(closestDamagedStructure)
             }
 
