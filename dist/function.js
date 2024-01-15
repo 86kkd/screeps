@@ -15,13 +15,13 @@ var creep_counter = {
     //    sys_log(this.harvester+'this.harvester');
       }
       else if(name.includes('upgrader')) this.upgrader = 1+this.upgrader;
-      else if(name.includes('builder')) this.builder = 1+this.upgrader;
+      else if(name.includes('builder')) this.builder = 1+this.builder;
     }
     return this;
   }
 };
 
-var room_targets = {
+var room_targets_ctl = {
 
   source_target:null,
   
@@ -54,29 +54,26 @@ function auto_name_spawn(spawn,
  * @param {spawn} spawn 
  * @param {*} counter 
  */
-function init_serval_workers (spawn,counter){
-  sys_log("alive screeps:\nharvester"+counter.harvester+"\n"+
-              "upgrader" + counter.upgrader+'\n'+
-              "builder" + counter.builder + '\n'
+function init_serval_workers (spawn,counter,stage_ploy){
+  sys_log("alive screeps:\nharvester:"+counter.harvester+"\n"+
+              "upgrader :" + counter.upgrader+'\n'+
+              "builder  :" + counter.builder + '\n'
               );
-  if(counter.harvester<5){
+  if(counter.harvester<stage_ploy.num_harvester){
     var result = auto_name_spawn(spawn,"harvester",group,
-    [WORK,WORK,CARRY,MOVE]);
-    counter.harvester+=1;
+    stage_ploy.worker_body);
     sys_log("spawn Harvester"+(counter.harvester+1)+
     " result: " + result);
   }
-  else if(counter.upgrader<6){
+  else if(counter.upgrader<stage_ploy.num_upgrader){
     var result = auto_name_spawn(spawn,"upgrader",group,
-    [WORK,WORK,CARRY,MOVE]);
-    counter.upgrader+=1;
+    stage_ploy.worker_body);
     sys_log("spawn Upgrader"+(counter.upgrader+1)+
     " result: " + result);
   }
-  else if(counter.builder<2){
+  else if(counter.builder<stage_ploy.num_builder){
     var result = auto_name_spawn(spawn,"builder",group,
-    [WORK,WORK,CARRY,MOVE]);
-    counter.builder+=1;
+    stage_ploy.worker_body);
     sys_log("spawn Builder"+(counter.upgrader+1)+
     " result: " + result);
       // sys_log('spawnCreep signal '+success);
@@ -98,4 +95,4 @@ var group = {
 function sys_log(str){
   console.log(str)
 }
-module.exports = {creep_counter,room_targets,init_serval_workers,group,sys_log};
+module.exports = {creep_counter,room_targets: room_targets_ctl,init_serval_workers,group,sys_log};

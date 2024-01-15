@@ -1,7 +1,8 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
-var {creep_counter,room_targets,init_serval_workers,group,sys_log}= require('function');
+var {creep_counter,room_targets: room_targets_ctl,
+    init_serval_workers,group,sys_log}= require('function');
 var roleTower = require('role.tower');
 const creep_type = ["harvester","upgrader","builder"];
 
@@ -17,18 +18,103 @@ tower1:"65a46e27f7c07dfd1c571830"
 
 //TODO rewrite creep_counter and finish group
 //TODO if no source get another source
-//TODO leve 1 and level 2
-//Game.spawns['Spawn1'].room.controller.activateSafeMode(); most important
-// construct preority
+//TODO Game.spawns['Spawn1'].room.controller.activateSafeMode(); most important
+//TODO construct preority
 
 // Game.spawns['Spawn1'].room.createConstructionSite( 23, 22, STRUCTURE_TOWER ); 
+var stage_ploy = {
+    test : "test",
+    ploy:[
+        {   
+            worker_body:[
+                WORK,WORK,
+                CARRY,
+                MOVE],
+            num_harvester:6,
+            num_upgrader:6,
+            num_builder:4
+        },
+        {
+            worker_body:[
+                WORK,WORK,WORK,
+                CARRY,CARRY,
+                MOVE,MOVE,MOVE],
+            num_harvester:4,
+            num_upgrader:3,
+            num_builder:1
+        },
+        {
+            worker_body:[
+                WORK,WORK,WORK,WORK,
+                CARRY,CARRY,CARRY,CARRY,
+                MOVE,MOVE,MOVE,MOVE],
+            num_harvester:4,
+            num_upgrader:4,
+            num_builder:2
+        },
+        {
+            worker_body:[
+                WORK,WORK,WORK,WORK,WORK,WORK,
+                CARRY,CARRY,CARRY,CARRY,
+                MOVE,MOVE,MOVE,MOVE,MOVE],
+            num_harvester:4,
+            num_upgrader:4,
+            num_builder:2
+        },
+        {
+            worker_body:[
+                WORK,WORK,WORK,WORK,WORK,WORK,WORK,
+                CARRY,CARRY,CARRY,CARRY,CARRY,
+                MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
+            num_harvester:4,
+            num_upgrader:4,
+            num_builder:2
+        
+        },
+        {
+            worker_body:[
+                WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,
+                CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,
+                MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
+            num_harvester:4,
+            num_upgrader:4,
+            num_builder:2
+         
+        }, 
+        {
+            worker_body:[
+                WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,
+                CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,
+                MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
+            num_harvester:4,
+            num_upgrader:4,
+            num_builder:2
+
+        },
+        {
+            worker_body:[
+                WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,
+                CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,
+                MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
+            num_harvester:4,
+            num_upgrader:4,
+            num_builder:2     
+        },
+     ],
+    choise:function(room_level)  {
+       return this.ploy[room_level-1]
+    }
+}
+
 
 module.exports.loop = function () {
 
     var counter = creep_counter.count();
 //    sys_log(counter.harvester+'counter.harvester');
-    sys_log(spawn.room.controller.level);
-    init_serval_workers(spawn,counter);
+    var room_level = spawn.room.controller.level;
+    sys_log(room_level);
+    init_serval_workers(spawn,counter,
+        stage_ploy.choise(room_level));
     
     roleTower.run(tower_ids.tower1);
 
@@ -39,7 +125,7 @@ module.exports.loop = function () {
             sys_log(creep.memory.role + " is not in creep_type")
         }
         if(creep.memory.role == 'harvester') {
-            var targets = room_targets.search(creep);
+            var targets = room_targets_ctl.search(creep);
             // sys_log(source_to_harvest.builder1_source);
             roleHarvester.run(creep,
                 targets.source_target[source_to_harvest.builder1_source]);
