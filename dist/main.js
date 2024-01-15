@@ -17,9 +17,10 @@ tower1:"65a46e27f7c07dfd1c571830"
 };
 
 //TODO rewrite creep_counter and finish group
-//TODO if no source get another source
+//TODO source target ctl center
 //TODO Game.spawns['Spawn1'].room.controller.activateSafeMode(); most important
 //TODO construct preority
+//TODO defain constract center
 
 // Game.spawns['Spawn1'].room.createConstructionSite( 23, 22, STRUCTURE_TOWER ); 
 var stage_ploy = {
