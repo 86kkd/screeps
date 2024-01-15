@@ -21,6 +21,7 @@ tower1:"65a46e27f7c07dfd1c571830"
 //TODO Game.spawns['Spawn1'].room.controller.activateSafeMode(); most important
 //TODO construct preority
 //TODO defain constract center
+//TODO tombstone recycle
 
 // Game.spawns['Spawn1'].room.createConstructionSite( 23, 22, STRUCTURE_TOWER ); 
 var stage_ploy = {
