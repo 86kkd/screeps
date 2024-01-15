@@ -6,13 +6,13 @@ var roleTower = {
         if(tower) {
             var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
                 filter: (structure) => {
-                        if(structure.structureType == "constructedWall"||
-                            structure.structureType == "rampart"){
-                                return structure.hits<5000;
-                            }
-                        else{
-                            return structure.hits < structure.hitsMax;
+                    if(structure.structureType == "constructedWall"||
+                        structure.structureType == "rampart"){
+                            return structure.hits<5000;
                         }
+                    else{
+                        return structure.hits < structure.hitsMax;
+                    }
                     
                 }
             });
