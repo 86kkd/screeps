@@ -13,9 +13,6 @@ var RevenueMinistry = {
     var spawn_result = 0;
     var ploy_index = 0;
     var in_use_ploy = ploy[ploy_index];
-    sys_log("body:"+body.worker_body+' '+
-            screep_role+" "+scree_group);
-    
     do{
       spawn_result = spawn.spawnCreep(
         in_use_ploy.body[role],
@@ -65,17 +62,24 @@ var RevenueMinistry = {
     builder: 0,
     /** @param {Creep} creep **/
     count: function() {
-      this.harvester =0;
-      this.upgrader =0;
-      this.builder =0;
+      this.harvester = 0;
+      this.upgrader = 0;
+      this.builder = 0;
+      this.other = 0;
       for(var name in Game.creeps){
-        if(name.includes('harvester')) {
+        if(Game.creeps[name].memory.role=='harvester') {
           this.harvester += 1;
-      //    sys_log(this.harvester+'this.harvester');
         }
-        else if(name.includes('upgrader')) this.upgrader = 1+this.upgrader;
-        else if(name.includes('builder')) this.builder = 1+this.builder;
-      }
+        else if(Game.creeps[name].memory.role=='upgrader'){
+          this.upgrader += 1;
+        }
+        else if(Game.creeps[name].memory.role=='builder'){
+          this.builder += 1;
+        }
+        else{
+          this.other +=1;
+        }
+      }     
       return this;
     }
   }
@@ -111,4 +115,4 @@ var PublicWorksMinistry = {
 }
 module.export = {RevenueMinistry,PersonnelMinistry,
   RitesMinistry,WarMinistry,
-  JusticMinistry,PersonnelMinistry}
+  JusticMinistry,PublicWorksMinistry}

@@ -3,19 +3,27 @@ var creep_counter = {
   harvester : 0,
   upgrader: 0,
   builder: 0,
+  other: 0,
     
   /** @param {Creep} creep **/
   count: function() {
     this.harvester =0;
     this.upgrader =0;
     this.builder =0;
+    this.other =0;
     for(var name in Game.creeps){
-      if(name.includes('harvester')) {
+      if(Game.creeps[name].memory.role=='harvester') {
         this.harvester += 1;
-    //    sys_log(this.harvester+'this.harvester');
       }
-      else if(name.includes('upgrader')) this.upgrader = 1+this.upgrader;
-      else if(name.includes('builder')) this.builder = 1+this.builder;
+      else if(Game.creeps[name].memory.role=='upgrader'){
+        this.upgrader += 1;
+      }
+      else if(Game.creeps[name].memory.role=='builder'){
+        this.builder += 1;
+      }
+      else{
+        this.other +=1;
+      }
     }
     return this;
   }
