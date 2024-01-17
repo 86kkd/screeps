@@ -25,7 +25,8 @@ var RevenueMinistry = {
       }
       id_number ++;
     }
-    while(spawn_result == ERR_NAME_EXISTS);
+    while(spawn_result == ERR_NAME_EXISTS||
+      spawn_result == ERR_NOT_ENOUGH_ENERGY);
     return spawn_result;
   },
   spawn_creep:function (spawn,counter,stage_ploy){
