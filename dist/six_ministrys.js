@@ -82,8 +82,12 @@ var RevenueMinistry = {
       }     
       return this;
     }
+  },
+  // source to harvest
+  source_deleop_mgr:{
+    group:undefined,
+    room:undefined,
   }
-// source to harvest
 // source to trans
 // creeps count
 
