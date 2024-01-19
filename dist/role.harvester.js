@@ -2,6 +2,13 @@ const { sys_log } = require("./function");
 
 var roleHarvester = {
 
+    run_to_another_room:function(room_name){
+        room = Game.room[room_name];
+        const exitDir = creep.room.findExitTo(room);
+        const exit = creep.pos.findClosestByRange(exitDir);
+        creep.moveTo(exit);
+    },
+
     /** @param {Creep} creep **/
     run: function(creep,source_targets) {
         var spawn=Game.spawns['Spawn1'];

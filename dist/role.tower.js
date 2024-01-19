@@ -4,6 +4,10 @@ var roleTower = {
     run:(tower_id)=>{
         var tower = Game.getObjectById(tower_id);
         if(tower) {
+            var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+            if(closestHostile) {
+                tower.attack(closestHostile);
+            }
             var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
                 filter: (structure) => {
                     if(structure.structureType == "constructedWall"||
@@ -23,10 +27,7 @@ var roleTower = {
                 tower.repair(closestDamagedStructure)
             }
 
-            var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-            if(closestHostile) {
-                tower.attack(closestHostile);
-            }
+
         }
         else{
             // sys_log("tower id error"+tower_id)

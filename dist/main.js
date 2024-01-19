@@ -35,7 +35,8 @@ var stage_ploy = {
                 MOVE],
             num_harvester:6,
             num_upgrader:6,
-            num_builder:4
+            num_builder:4,
+            level:1
         },
         {
             worker_body:[
@@ -44,7 +45,8 @@ var stage_ploy = {
                 MOVE,MOVE,MOVE],
             num_harvester:4,
             num_upgrader:3,
-            num_builder:1
+            num_builder:1,
+            level:2
         },
         {
             worker_body:[
@@ -53,16 +55,18 @@ var stage_ploy = {
                 MOVE,MOVE,MOVE,MOVE],
             num_harvester:4,
             num_upgrader:3,
-            num_builder:1
+            num_builder:1,
+            level:3
         },
         {
             worker_body:[
                 WORK,WORK,WORK,WORK,WORK,WORK,WORK,
                 CARRY,CARRY,CARRY,CARRY,CARRY,
                 MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
-            num_harvester:4,
-            num_upgrader:5,
-            num_builder:2
+            num_harvester:2,
+            num_upgrader:3,
+            num_builder:1,
+            level:4
         },
         {
             worker_body:[
@@ -71,7 +75,8 @@ var stage_ploy = {
                 MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
             num_harvester:4,
             num_upgrader:4,
-            num_builder:2
+            num_builder:2,
+            level:5
         
         },
         {
@@ -81,7 +86,8 @@ var stage_ploy = {
                 MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
             num_harvester:4,
             num_upgrader:4,
-            num_builder:2
+            num_builder:2,
+            level:6
          
         }, 
         {
@@ -91,7 +97,8 @@ var stage_ploy = {
                 MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
             num_harvester:4,
             num_upgrader:4,
-            num_builder:2
+            num_builder:2,
+            level:7
 
         },
         {
@@ -101,7 +108,8 @@ var stage_ploy = {
                 MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
             num_harvester:4,
             num_upgrader:4,
-            num_builder:2     
+            num_builder:2,
+            level:8     
         },
      ],
     choise:function(room_level)  {
@@ -117,7 +125,7 @@ module.exports.loop = function () {
     var room_level = spawn.room.controller.level;
     sys_log("roomlevel"+room_level);
     init_serval_workers(spawn,counter,
-        stage_ploy.choise(room_level));
+        stage_ploy.choise(3));
     
     roleTower.run(tower_ids.tower1);
 
