@@ -1,12 +1,7 @@
 var creep_counter = {
-    
-  harvester : 0,
-  upgrader: 0,
-  builder: 0,
-  other: 0,
-    
-  /** @param {Creep} creep **/
+
   count: function() {
+    // this.count=this.count,
     this.harvester =0;
     this.upgrader =0;
     this.builder =0;

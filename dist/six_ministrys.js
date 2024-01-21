@@ -1,20 +1,22 @@
 var { sys_log } = require('function');
 const { run } = require('./role.harvester');
 // spawn creeps and assign attributes
-function assign_creep_attributes (spawn,role,ploy){
+function assign_creep_attributes (
+  spawn,screep_role,
+  body_function,scree_group){
     var id_number = 0;
     var spawn_result = 0;
     var ploy_index = 0;
-    var in_use_ploy = ploy[ploy_index];
+    var body = body_function[ploy_index];
     do{
       spawn_result = spawn.spawnCreep(
-        in_use_ploy.body[role],
+        body,
         screep_role+id_number,
         {memory:{role:screep_role,group:scree_group}});
       if (spawn_result == ERR_NOT_ENOUGH_ENERGY){
         //using plan B
         ploy_index +=1;
-        in_use_ploy = ploy[ploy_index]
+        body = body_function[ploy_index]
       }
       id_number ++;
     }
@@ -26,20 +28,7 @@ function assign_creep_attributes (spawn,role,ploy){
 //户部 职能：负责财政、税收、人口统计、户口管理等方面的工作。
 var RevenueMinistry = {
 
-  init: function(){
-    this.msg={
-      spawn_success:undefined,
-      num_harvester:0,
-      num_builder:0,
-      num_upgrader:0,
-      num_other:[]
-    }
-    this.counter={
-      num_harvester : 0,
-      num_upgrader : 0,
-      num_builder : 0,
-      num_other : []
-    },
+  init: function(spawn){
     this.room_energy_available = 
       spawn.room.energyAvailable;
     this.room_energy_capacity_available = 
@@ -78,17 +67,17 @@ var RevenueMinistry = {
   },
   // count creeps in the room
 
-  count_creeps: function(counter,spawn) {
-    counter.num_harvester = 0;
-    counter.num_upgrader = 0;
-    counter.num_builder = 0;
-    counter.num_other = [];
-    counter.death = 0;
-    counter.deceased_stom = [],
+  room_counter: function(spawn) {
+    this.num_harvester = 0;
+    this.num_upgrader = 0;
+    this.num_builder = 0;
+    this.num_other = [];
+    this.death = 0;
+    this.deceased_stom = [],
     spawn.room.find(FIND_TOMBSTONES).forEach(tombstone => {
       if(tombstone.creep.my) {
-          counter.death+=1;
-          counter.deceased_stom.push(tombstone.creep.pos)
+          this.death+=1;
+          this.deceased_stom.push(tombstone.creep.pos)
           console.log(`My creep died with ID=${tombstone.creep.id} ` +
               `and role=${Memory.creeps[tombstone.creep.name].role}`);   
       }    
@@ -100,53 +89,19 @@ var RevenueMinistry = {
     });
     for(var name in Game.creeps){
       if(Game.creeps[name].memory.role=='harvester') {
-        counter.num_harvester += 1;
+        this.num_harvester += 1;
       }
       else if(Game.creeps[name].memory.role=='upgrader'){
-        counter.num_upgrader += 1;
+        this.num_upgrader += 1;
       }
       else if(Game.creeps[name].memory.role=='builder'){
-        counter.num_builder += 1;
+        this.num_builder += 1;
       }
       else{
-        counter.num_other.push(name) ;
+        this.num_other.push(name) ;
       }
     }     
   },
-  // source to harvest
-  source_deleop_mgr:{
-    group_tasks:{
-      group_id:undefined,
-      work_room:undefined,
-      group_creep:{
-        group_number:undefined,
-        creep_role:undefined, 
-      },
-    },
-    group_task_center:[],
-    
-    generate_workspace_list:function(rooms){
-      this.set_room_to_harvest(rooms);
-      this.group_task_center.push(this.group_tasks);
-    },
-
-    set_room_to_harvest:function(rooms){
-      for(room in rooms){
-        this.assign_group_room(groups,room);
-      }
-    },
-
-    assign_group_room: function(groups,room){
-      for(group in groups){
-        if(!group.room){
-          group.work_room = room;
-        }
-      }
-    },
-    
-  }
-// source to trans
-// creeps count
 };
 
 //吏部 管理官员任免、选拔、培训等人事事务。
@@ -156,10 +111,10 @@ var PersonnelMinistry = {
     stage_ploy:undefined,
     stage_level:undefined,
     group_size:undefined,
-    func:{
+    func:[{
       type:undefined,
       num:undefined,
-    }
+    }]
   
   },
   //construct function must use new

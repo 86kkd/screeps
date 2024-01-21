@@ -120,12 +120,13 @@ var stage_ploy = {
 
 module.exports.loop = function () {
 
-    var counter = creep_counter.count();
+    var counter = new creep_counter.count();
+    // sys_log(`counter success ${counter.count()}`);j
 //    sys_log(counter.harvester+'counter.harvester');
     var room_level = spawn.room.controller.level;
     sys_log("roomlevel"+room_level);
     init_serval_workers(spawn,counter,
-        stage_ploy.choise(3));
+        stage_ploy.choise(4));
     
     roleTower.run(tower_ids.tower1);
 
