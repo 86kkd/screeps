@@ -115,40 +115,72 @@ var RevenueMinistry = {
   },
   // source to harvest
   source_deleop_mgr:{
-    group_id:undefined,
-    other_room_source:{
-      room_id:undefined,
-      sorce_id:undefined,
-      resource_id:undefined,
+    group_tasks:{
+      group_id:undefined,
+      work_room:undefined,
+      group_creep:{
+        group_number:undefined,
+        creep_role:undefined, 
+      },
     },
-    assign_source_target: function(sources){
-      if(source.energy){
-        
-      }
+    group_task_center:[],
+    
+    generate_workspace_list:function(rooms){
+      this.set_room_to_harvest(rooms);
+      this.group_task_center.push(this.group_tasks);
     },
-    find_source_in_room:function(room_name){
 
-    },
     set_room_to_harvest:function(rooms){
-      for (room in rooms){
-        
+      for(room in rooms){
+        this.assign_group_room(groups,room);
       }
-    }
+    },
+
+    assign_group_room: function(groups,room){
+      for(group in groups){
+        if(!group.room){
+          group.work_room = room;
+        }
+      }
+    },
+    
   }
 // source to trans
 // creeps count
-
 };
+
 //吏部 管理官员任免、选拔、培训等人事事务。
 var PersonnelMinistry = {
 // worker creep body and power in each strage
-  stage_ploy:undefined,
-  stage_level:undefined,
-  group_size:undefined,
+  gorup:{
+    stage_ploy:undefined,
+    stage_level:undefined,
+    group_size:undefined,
+    func:{
+      type:undefined,
+      num:undefined,
+    }
+  
+  },
   //construct function must use new
   init: function(spawn){
     this.stage_level = spawn.room.controller.level;
+  },
+
+  gen_body_list:function(body_list,func,num){
+    for(var i=0;i<num;i++){
+      body_list.push(func);
     }
+    return body_list;
+  },
+
+  assign_group_major:function(group){
+    for(func in group.func){
+      group.body = this.gen_body_list(
+        group.body,func.type,func.num);
+    }
+    return group;
+  }
 
 };
 //礼部 职能：管理宗教、礼仪、外交事务，以及皇帝的祭祀仪式。
