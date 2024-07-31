@@ -5,7 +5,6 @@ var {creep_counter,room_targets: room_targets_ctl,
     init_serval_workers,sys_log}= require('function');
 var roleTower = require('role.tower');
 const { CreateHRSC } = require('./HR_Service_Center');
-
 var spawn=Game.spawns['Spawn1'];
 // TODO开采地区选择
 var source_to_harvest = {
@@ -15,7 +14,7 @@ var source_to_harvest = {
 var tower_ids = {
     tower1: "6cf4753c8d85837",
 };
-require("HR_Service_Center");
+const HR_Service_Center = require("HR_Service_Center");
 
 //TODO rewrite creep_counter and finish group
 //TODO source target ctl center
@@ -243,15 +242,25 @@ var stage_ploy = {
 };
 
 module.exports.loop = function () {
-    var counter = new creep_counter.count();
+    const source_id = ["26f20772347f879", "71ac0772347ffe6"];
+    const tower_id = ["toer_id"];
+    const startCpu = Game.cpu.getUsed();
+
+    const counter = new creep_counter.count();
     // sys_log(`counter success ${counter.count()}`);j
     //    sys_log(counter.harvester+'counter.harvester');
-    var room_level = spawn.room.controller.level;
+    const room_level = spawn.room.controller.level;
     sys_log("roomlevel" + room_level);
     init_serval_workers(spawn, counter, stage_ploy.choise(1));
 
-    roleTower.run(tower_ids.tower1);
-    const HR_Service_Center = CreateHRSC();
-    sys_log(`HR_Service_Center ${HR_Service_Center.creep_type}`);
-    HR_Service_Center.run();
+    // give ids to mamage
+    roleTower.run(tower_id);
+    const HR = HR_Service_Center.CreateHRSC(source_id);
+
+    HR.run();
+    console.log("HR source_id:" + HR.source_id);
+
+    const elapsed = Game.cpu.getUsed() - startCpu;
+    console.log("cpu has used " + elapsed + " CPU time");
+    console.log("cpu limi:" + Game.cpu.tickLimit);
 };

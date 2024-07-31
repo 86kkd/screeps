@@ -4,43 +4,44 @@ const roleBuilder = require("role.builder");
 const roleTower = require("role.tower");
 
 const tover_id = "6cf4753c8d85837";
-
-const room_targets_ctl = {
-    source_target: null,
-
-    /** @param {Creep} creep **/
-    search: (creep) => {
-        // sys_log('bug here');
-        this.source_target = creep.room.find(FIND_SOURCES);
-        // sys_log('bug not here');
-        return this;
-    },
-};
-
-const source_to_harvest = {
-    builder1_source: 1,
-};
-
 class HRSC {
     /**
      * @function constructer initialize the creep_type
      */
-    constructor() {
-        // this.creep_type = ["harvester","upgrader","builder"];
+    constructor(source_id) {
+        this.source_id = source_id;
+        // this.source_id = ["26f20772347f879", "71ac0772347ffe6"];
+        this.creep_type = ["harvester", "upgrader", "builder"];
     }
 
     /**
      * @function run the main loop
      */
     run() {
-        const creep_type = ["harvester", "upgrader", "builder"];
+        const spawn_name = "Spawn1";
 
-        const room_source = Game.spawns["Spawn1"].room.find(FIND_SOURCES);
+        const spawn = Game.spawns[spawn_name];
+        const room = spawn.room;
+        const room_source = room.find(FIND_SOURCES);
+        const ctl_level = room.controller.level;
+        const energy_avail = room.energyAvailable;
+        const energy_max = room.energyCapacityAvailable;
 
+        console.log("find source id:" + room_source[0]);
+        console.log("Game controller level:" + ctl_level);
+        console.log(spawn_name + " energy_availble:" + energy_avail);
+        console.log(spawn_name + " energy_max:" + energy_max);
+
+        for (let i = 0; i < this.source_id.length; i++) {
+            const id = this.source_id[i];
+            const Source = Game.getObjectById(id);
+            const last_energy = Source.energy;
+            console.log("source_" + id + " energy:" + last_energy);
+        }
         roleTower.run(tover_id);
         for (const name in Game.creeps) {
             const creep = Game.creeps[name];
-            if (!creep_type.includes(creep.memory.role)) {
+            if (!this.creep_type.includes(creep.memory.role)) {
                 sys_log(creep.memory.role + " is not in creep_type");
             }
             if (creep.memory.role == "harvester") {
@@ -58,7 +59,7 @@ class HRSC {
 
 module.exports = {
     HRSC,
-    CreateHRSC() {
-        return new HRSC();
+    CreateHRSC(source_id) {
+        return new HRSC(source_id);
     },
 };
