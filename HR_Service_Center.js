@@ -5,7 +5,7 @@ const roleTower = require("role.tower");
 
 const tover_id = "6cf4753c8d85837";
 
-let room_targets_ctl = {
+const room_targets_ctl = {
     source_target: null,
 
     /** @param {Creep} creep **/
@@ -17,7 +17,7 @@ let room_targets_ctl = {
     },
 };
 
-let source_to_harvest = {
+const source_to_harvest = {
     builder1_source: 1,
 };
 
@@ -38,13 +38,12 @@ class HRSC {
         const room_source = Game.spawns["Spawn1"].room.find(FIND_SOURCES);
 
         roleTower.run(tover_id);
-        for (var name in Game.creeps) {
-            var creep = Game.creeps[name];
+        for (const name in Game.creeps) {
+            const creep = Game.creeps[name];
             if (!creep_type.includes(creep.memory.role)) {
                 sys_log(creep.memory.role + " is not in creep_type");
             }
             if (creep.memory.role == "harvester") {
-                var targets = room_targets_ctl.search(creep);
                 roleHarvester.run(creep, room_source[0]);
             }
             if (creep.memory.role == "upgrader") {
