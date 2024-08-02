@@ -1,4 +1,4 @@
-var creep_counter = {
+const creep_counter = {
   count: function () {
     // this.count=this.count,
     this.harvester = 0;
@@ -84,10 +84,16 @@ function init_serval_workers(spawn, counter, stage_ploy) {
   } else if (counter.builder < stage_ploy.num_builder) {
     const result = auto_name_spawn(spawn, "builder", group, body = stage_ploy);
     sys_log(
-      "spawn Builder" + (counter.upgrader + 1) +
+      "spawn Builder" + (counter.builder + 1) +
         " result: " + result,
     );
     // sys_log('spawnCreep signal '+success);
+  } else if (counter.recycler < stage_ploy.recycler) {
+    const result = auto_name_spawn(spawn, "recycler", group, body = stage_ploy);
+    sys_log(
+      "spawn recycler" + (counter.recycler + 1) +
+        " result: " + result,
+    );
   }
 }
 
@@ -100,4 +106,3 @@ module.exports = {
   init_serval_workers,
   sys_log,
 };
-

@@ -258,7 +258,6 @@ module.exports.loop = function () {
     roleTower.run(tower_id);
     const HR = HR_Service_Center.CreateHRSC();
 
-
     HR.run();
     console.log("HR source_id:" + HR.source_id);
 
