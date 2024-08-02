@@ -1,4 +1,4 @@
-let roleHarvester = {
+const roleHarvester = {
     run_to_another_room: function (room_name) {
         room = Game.room[room_name];
         const exitDir = creep.room.findExitTo(room);
@@ -9,14 +9,13 @@ let roleHarvester = {
     /** @param {Creep} creep **/
     run: function (creep, source_targets) {
         // act as a harvester
+        // creep.say("🔄 harvest");
         if (creep.store[RESOURCE_ENERGY] == 0 && creep.memory.trans) {
             creep.memory.trans = false;
-            creep.memory.building = false;
         }
 
         if (
-            creep.store.getFreeCapacity() > 0 && !creep.memory.building &&
-            !creep.memory.trans
+            creep.store.getFreeCapacity() > 0 && !creep.memory.trans
         ) {
             if (creep.harvest(source_targets) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(source_targets, {
@@ -47,4 +46,3 @@ let roleHarvester = {
 };
 
 module.exports = roleHarvester;
-

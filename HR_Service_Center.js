@@ -3,7 +3,6 @@ const roleUpgrader = require("role.upgrader");
 const roleBuilder = require("role.builder");
 const roleTower = require("role.tower");
 
-const tover_id = "6cf4753c8d85837";
 class HRSC {
     /**
      * @function constructer initialize the creep_type
@@ -21,10 +20,21 @@ class HRSC {
 
         const spawn = Game.spawns[spawn_name];
         const room = spawn.room;
-        const room_source = room.find(FIND_SOURCES);
         const ctl_level = room.controller.level;
         const energy_avail = room.energyAvailable;
         const energy_max = room.energyCapacityAvailable;
+
+        const construct_set = room.find(FIND_CONSTRUCTION_SITES);
+        const room_source = room.find(FIND_SOURCES, {
+            filter: (source) => {
+                return (source.energy > 0);
+            },
+        });
+        const tower = room.find(FIND_STRUCTURES, {
+            filter: (structure) => {
+                return (structure.structureType == STRUCTURE_TOWER);
+            },
+        });
 
         console.log("find source id:" + room_source[0] + " " + room_source[1]);
         console.log("Game controller level:" + ctl_level);
@@ -38,7 +48,11 @@ class HRSC {
             console.log("source_" + id + " energy:" + last_energy);
         }
 
-        roleTower.run(tover_id);
+        for (let i = 0; i < tower.length; i++) {
+            const tower_id = tower[i].id;
+            roleTower.run(tower_id);
+            console.log("tower id:" + tower[0]);
+        }
 
         for (const name in Game.creeps) {
             const creep = Game.creeps[name];
@@ -52,7 +66,11 @@ class HRSC {
                 roleUpgrader.run(creep, room_source[1]);
             }
             if (creep.memory.role == "builder") {
-                roleBuilder.run(creep, room_source[1]);
+                if (construct_set.length) {
+                    roleBuilder.run(creep, room_source[1], construct_set);
+                } else {
+                    roleUpgrader.run(creep, room_source[1]);
+                }
             }
         }
     }
