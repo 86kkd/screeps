@@ -1,6 +1,6 @@
 const roleBuilder = {
   /** @param {Creep} creep **/
-  run: function (creep, source, construct_set) {
+  run: function (creep, source) {
     if (creep.memory.building && creep.store[RESOURCE_ENERGY] == 0) {
       creep.memory.building = false;
       creep.say("🔄 harvest");
@@ -11,9 +11,13 @@ const roleBuilder = {
     }
 
     if (creep.memory.building) {
-      if (construct_set.length) {
-        if (creep.build(construct_set[0]) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(construct_set[0], {
+      const construct_set = creep.pos.findClosestByPath(
+        FIND_CONSTRUCTION_SITES,
+      );
+      if (construct_set) {
+        if (creep.build(construct_set) == ERR_NOT_IN_RANGE) {
+          creep.say("🚧 build");
+          creep.moveTo(construct_set, {
             visualizePathStyle: { stroke: "#ffffff" },
           });
         }

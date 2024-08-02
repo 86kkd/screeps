@@ -35,6 +35,14 @@ class HRSC {
                 return (structure.structureType == STRUCTURE_TOWER);
             },
         });
+        const trans_target = room.find(FIND_STRUCTURES, {
+            filter: (structure) => {
+                return (structure.structureType == STRUCTURE_EXTENSION ||
+                    structure.structureType == STRUCTURE_SPAWN ||
+                    structure.structureType == STRUCTURE_TOWER) &&
+                    structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+            },
+        });
 
         console.log("find source id:" + room_source[0] + " " + room_source[1]);
         console.log("Game controller level:" + ctl_level);
@@ -60,14 +68,18 @@ class HRSC {
                 sys_log(creep.memory.role + " is not in creep_type");
             }
             if (creep.memory.role == "harvester") {
-                roleHarvester.run(creep, room_source[0]);
+                if (trans_target.length) {
+                    roleHarvester.run(creep, room_source[0]);
+                } else {
+                    roleUpgrader.run(creep, room_source[0]);
+                }
             }
             if (creep.memory.role == "upgrader") {
-                roleUpgrader.run(creep, room_source[1]);
+                roleUpgrader.run(creep, room_source[0]);
             }
             if (creep.memory.role == "builder") {
                 if (construct_set.length) {
-                    roleBuilder.run(creep, room_source[1], construct_set);
+                    roleBuilder.run(creep, room_source[1]);
                 } else {
                     roleUpgrader.run(creep, room_source[1]);
                 }
