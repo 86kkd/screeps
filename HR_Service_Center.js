@@ -8,8 +8,7 @@ class HRSC {
     /**
      * @function constructer initialize the creep_type
      */
-    constructor(source_id) {
-        this.source_id = source_id;
+    constructor() {
         // this.source_id = ["26f20772347f879", "71ac0772347ffe6"];
         this.creep_type = ["harvester", "upgrader", "builder"];
     }
@@ -27,18 +26,20 @@ class HRSC {
         const energy_avail = room.energyAvailable;
         const energy_max = room.energyCapacityAvailable;
 
-        console.log("find source id:" + room_source[0]);
+        console.log("find source id:" + room_source[0] + " " + room_source[1]);
         console.log("Game controller level:" + ctl_level);
         console.log(spawn_name + " energy_availble:" + energy_avail);
         console.log(spawn_name + " energy_max:" + energy_max);
 
-        for (let i = 0; i < this.source_id.length; i++) {
-            const id = this.source_id[i];
+        for (let i = 0; i < room_source.length; i++) {
+            const id = room_source[i].id;
             const Source = Game.getObjectById(id);
             const last_energy = Source.energy;
             console.log("source_" + id + " energy:" + last_energy);
         }
+
         roleTower.run(tover_id);
+
         for (const name in Game.creeps) {
             const creep = Game.creeps[name];
             if (!this.creep_type.includes(creep.memory.role)) {
@@ -59,7 +60,7 @@ class HRSC {
 
 module.exports = {
     HRSC,
-    CreateHRSC(source_id) {
-        return new HRSC(source_id);
+    CreateHRSC() {
+        return new HRSC();
     },
 };

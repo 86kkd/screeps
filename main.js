@@ -242,7 +242,6 @@ var stage_ploy = {
 };
 
 module.exports.loop = function () {
-    const source_id = ["26f20772347f879", "71ac0772347ffe6"];
     const tower_id = ["toer_id"];
     const startCpu = Game.cpu.getUsed();
 
@@ -255,7 +254,7 @@ module.exports.loop = function () {
 
     // give ids to mamage
     roleTower.run(tower_id);
-    const HR = HR_Service_Center.CreateHRSC(source_id);
+    const HR = HR_Service_Center.CreateHRSC();
 
     HR.run();
     console.log("HR source_id:" + HR.source_id);

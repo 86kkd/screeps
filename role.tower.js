@@ -1,32 +1,35 @@
-let roleTower = {
-    run:(tower_id)=>{
-        let tower = Game.getObjectById(tower_id);
-        if(tower) {
-            let closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-            if(closestHostile) {
+const roleTower = {
+    run: (tower_id) => {
+        const tower = Game.getObjectById(tower_id);
+        if (tower) {
+            const closestHostile = tower.pos.findClosestByRange(
+                FIND_HOSTILE_CREEPS,
+            );
+            if (closestHostile) {
                 tower.attack(closestHostile);
             }
-            let closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-                filter: (structure) => {
-                    if(structure.structureType == "constructedWall"||
-                        structure.structureType == "rampart"){
-                            return structure.hits<5000;
+            const closestDamagedStructure = tower.pos.findClosestByRange(
+                FIND_STRUCTURES,
+                {
+                    filter: (structure) => {
+                        if (
+                            structure.structureType == "constructedWall" ||
+                            structure.structureType == "rampart"
+                        ) {
+                            return structure.hits < 5000;
+                        } else {
+                            return structure.hits < structure.hitsMax;
                         }
-                    else{
-                        return structure.hits < structure.hitsMax;
-                    }
-                    
-                }
-            });
-            if(closestDamagedStructure) {
-                tower.repair(closestDamagedStructure)
+                    },
+                },
+            );
+            if (closestDamagedStructure) {
+                tower.repair(closestDamagedStructure);
             }
-
-
-        }
-        else{
+        } else {
             // sys_log("tower id error"+tower_id)
         }
-    }
-}
+    },
+};
 module.exports = roleTower;
+
