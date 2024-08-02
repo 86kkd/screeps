@@ -5,7 +5,7 @@ var creep_counter = {
     this.upgrader = 0;
     this.builder = 0;
     this.other = 0;
-    for (var name in Game.creeps) {
+    for (const name in Game.creeps) {
       if (Game.creeps[name].memory.role == "harvester") {
         this.harvester += 1;
       } else if (Game.creeps[name].memory.role == "upgrader") {
@@ -33,8 +33,8 @@ const room_targets_ctl = {
 };
 
 function auto_name_spawn(spawn, screep_role, scree_group, body) {
-  var number = 0;
-  var result = 0;
+  let number = 0;
+  let result = 0;
   sys_log(
     "body:" + body.worker_body + " " +
       screep_role + " " + scree_group,
@@ -63,9 +63,9 @@ function init_serval_workers(spawn, counter, stage_ploy) {
     "counter.harvester<stage_ploy.num_harvester:" + counter.harvester <
       stage_ploy.num_harvester,
   );
-  var group = 1;
+  const group = 1;
   if (counter.harvester < stage_ploy.num_harvester) {
-    var result = auto_name_spawn(
+    const result = auto_name_spawn(
       spawn,
       "harvester",
       group,
@@ -76,13 +76,13 @@ function init_serval_workers(spawn, counter, stage_ploy) {
         " result: " + result,
     );
   } else if (counter.upgrader < stage_ploy.num_upgrader) {
-    var result = auto_name_spawn(spawn, "upgrader", group, body = stage_ploy);
+    const result = auto_name_spawn(spawn, "upgrader", group, body = stage_ploy);
     sys_log(
       "spawn Upgrader" + (counter.upgrader + 1) +
         " result: " + result,
     );
   } else if (counter.builder < stage_ploy.num_builder) {
-    var result = auto_name_spawn(spawn, "builder", group, body = stage_ploy);
+    const result = auto_name_spawn(spawn, "builder", group, body = stage_ploy);
     sys_log(
       "spawn Builder" + (counter.upgrader + 1) +
         " result: " + result,
