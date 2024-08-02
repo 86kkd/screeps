@@ -9,7 +9,6 @@ const roleHarvester = {
     /** @param {Creep} creep **/
     run: function (creep, source_targets) {
         // act as a harvester
-        // creep.say("🔄 harvest");
         if (creep.store[RESOURCE_ENERGY] == 0 && creep.memory.trans) {
             creep.memory.trans = false;
         }
@@ -36,6 +35,7 @@ const roleHarvester = {
                 if (
                     creep.transfer(targets, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
                 ) {
+                    creep.say("🌾");
                     creep.moveTo(targets, {
                         visualizePathStyle: { stroke: "#ffffff" },
                     });

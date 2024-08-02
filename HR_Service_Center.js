@@ -43,6 +43,11 @@ class HRSC {
                     structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
             },
         });
+        const dorper_resources = room.find(FIND_DROPPED_RESOURCES, {
+            filter: (source) => {
+                return (source.energy > 0);
+            },
+        });
 
         console.log("find source id:" + room_source[0] + " " + room_source[1]);
         console.log("Game controller level:" + ctl_level);

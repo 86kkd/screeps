@@ -16,7 +16,7 @@ const roleBuilder = {
       );
       if (construct_set) {
         if (creep.build(construct_set) == ERR_NOT_IN_RANGE) {
-          creep.say("🚧 build");
+          creep.say("🚧");
           creep.moveTo(construct_set, {
             visualizePathStyle: { stroke: "#ffffff" },
           });

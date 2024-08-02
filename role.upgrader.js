@@ -7,7 +7,7 @@ const roleUpgrader = {
         }
         if (!creep.memory.upgrading && creep.store.getFreeCapacity() == 0) {
             creep.memory.upgrading = true;
-            creep.say("⚡ upgrade");
+            creep.say("⬆️ upgrade");
         }
 
         if (creep.memory.upgrading) {
@@ -15,7 +15,7 @@ const roleUpgrader = {
                 creep.upgradeController(creep.room.controller) ==
                     ERR_NOT_IN_RANGE
             ) {
-                creep.say("⚡ upgrade");
+                creep.say("⬆️");
                 creep.moveTo(creep.room.controller, {
                     visualizePathStyle: { stroke: "#ffffff" },
                 });

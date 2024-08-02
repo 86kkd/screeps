@@ -10,6 +10,8 @@ var spawn=Game.spawns['Spawn1'];
 var source_to_harvest = {
     builder1_source: 1,
 };
+
+
 // tower_ids
 var tower_ids = {
     tower1: "6cf4753c8d85837",
@@ -250,11 +252,12 @@ module.exports.loop = function () {
     //    sys_log(counter.harvester+'counter.harvester');
     const room_level = spawn.room.controller.level;
     sys_log("roomlevel" + room_level);
-    init_serval_workers(spawn, counter, stage_ploy.choise(1));
+    init_serval_workers(spawn, counter, stage_ploy.choise(3));
 
     // give ids to mamage
     roleTower.run(tower_id);
     const HR = HR_Service_Center.CreateHRSC();
+
 
     HR.run();
     console.log("HR source_id:" + HR.source_id);
