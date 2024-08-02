@@ -91,17 +91,6 @@ function init_serval_workers(spawn, counter, stage_ploy) {
   }
 }
 
-// var group = {
-//     min:3,
-//     mid:5,
-//     large:9,
-//     group_id :0,
-//     getid: function(){
-//       sys_log("the "+group+1+'th group for'+ work + " is ready");
-//       return this.group_id+=1;
-//     }
-
-// };
 function sys_log(str) {
   console.log(str);
 }
