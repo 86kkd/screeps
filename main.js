@@ -1,12 +1,15 @@
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var {creep_counter,room_targets: room_targets_ctl,
-    init_serval_workers,sys_log}= require('function');
-var roleTower = require('role.tower');
-const { CreateHRSC } = require('./HR_Service_Center');
-var spawn=Game.spawns['Spawn1'];
-// TODO开采地区选择
+var roleHarvester = require("role.harvester");
+var roleUpgrader = require("role.upgrader");
+var roleBuilder = require("role.builder");
+var {
+    creep_counter,
+    room_targets: room_targets_ctl,
+    init_serval_workers,
+    sys_log,
+} = require("function");
+var roleTower = require("role.tower");
+const { CreateHRSC } = require("HR_Service_Center");
+var spawn = Game.spawns["Spawn1"];
 var source_to_harvest = {
     builder1_source: 1,
 };
@@ -23,7 +26,6 @@ const HR_Service_Center = require("HR_Service_Center");
 //TODO construct preority
 //TODO defain constract center
 //TODO tombstone recycle
-//注释
 
 // Game.spawns['Spawn1'].room.createConstructionSite( 23, 22, STRUCTURE_TOWER );
 var stage_ploy = {
@@ -250,7 +252,6 @@ var stage_ploy = {
 };
 
 module.exports.loop = function () {
-    const tower_id = ["toer_id"];
     const startCpu = Game.cpu.getUsed();
 
     const counter = new creep_counter.count();
@@ -261,7 +262,6 @@ module.exports.loop = function () {
     init_serval_workers(spawn, counter, stage_ploy.choise(3));
 
     // give ids to mamage
-    roleTower.run(tower_id);
     const HR = HR_Service_Center.CreateHRSC();
     HR.run();
 

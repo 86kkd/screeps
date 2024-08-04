@@ -32,4 +32,3 @@ const roleTower = {
     },
 };
 module.exports = roleTower;
-
