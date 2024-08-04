@@ -4,6 +4,7 @@ const creep_counter = {
     this.harvester = 0;
     this.upgrader = 0;
     this.builder = 0;
+    this.recycler = 0;
     this.other = 0;
     for (const name in Game.creeps) {
       if (Game.creeps[name].memory.role == "harvester") {
@@ -12,6 +13,8 @@ const creep_counter = {
         this.upgrader += 1;
       } else if (Game.creeps[name].memory.role == "builder") {
         this.builder += 1;
+      } else if (Game.creeps[name].memory.role == "recycler") {
+        this.recycler += 1;
       } else {
         this.other += 1;
       }
@@ -88,7 +91,7 @@ function init_serval_workers(spawn, counter, stage_ploy) {
         " result: " + result,
     );
     // sys_log('spawnCreep signal '+success);
-  } else if (counter.recycler < stage_ploy.recycler) {
+  } else if (counter.recycler < stage_ploy.num_recycler) {
     const result = auto_name_spawn(spawn, "recycler", group, body = stage_ploy);
     sys_log(
       "spawn recycler" + (counter.recycler + 1) +

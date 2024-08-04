@@ -11,7 +11,6 @@ var source_to_harvest = {
     builder1_source: 1,
 };
 
-
 // tower_ids
 var tower_ids = {
     tower1: "6cf4753c8d85837",
@@ -40,6 +39,7 @@ var stage_ploy = {
             num_harvester: 6,
             num_upgrader: 6,
             num_builder: 4,
+            num_recycler: 1,
             level: 1,
         },
         {
@@ -56,6 +56,7 @@ var stage_ploy = {
             num_harvester: 4,
             num_upgrader: 5,
             num_builder: 1,
+            num_recycler: 1,
             level: 2,
         },
         {
@@ -74,8 +75,9 @@ var stage_ploy = {
                 MOVE,
             ],
             num_harvester: 4,
-            num_upgrader: 6,
-            num_builder: 1,
+            num_upgrader: 4,
+            num_builder: 3,
+            num_recycler: 1,
             level: 3,
         },
         {
@@ -103,6 +105,7 @@ var stage_ploy = {
             num_harvester: 2,
             num_upgrader: 3,
             num_builder: 1,
+            num_recycler: 1,
             level: 4,
         },
         {
@@ -130,6 +133,7 @@ var stage_ploy = {
             num_harvester: 4,
             num_upgrader: 4,
             num_builder: 2,
+            num_recycler: 1,
             level: 5,
         },
         {
@@ -161,6 +165,7 @@ var stage_ploy = {
             num_harvester: 4,
             num_upgrader: 4,
             num_builder: 2,
+            num_recycler: 1,
             level: 6,
         },
         {
@@ -196,6 +201,7 @@ var stage_ploy = {
             num_harvester: 4,
             num_upgrader: 4,
             num_builder: 2,
+            num_recycler: 1,
             level: 7,
         },
         {
@@ -257,9 +263,7 @@ module.exports.loop = function () {
     // give ids to mamage
     roleTower.run(tower_id);
     const HR = HR_Service_Center.CreateHRSC();
-
     HR.run();
-    console.log("HR source_id:" + HR.source_id);
 
     const elapsed = Game.cpu.getUsed() - startCpu;
     console.log("cpu has used " + elapsed + " CPU time");
