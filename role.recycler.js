@@ -1,3 +1,4 @@
+const TAG = "RECYCLER :";
 const roleRecycler = {
     run_to_another_room: function (room_name) {
         room = Game.room[room_name];
@@ -7,54 +8,52 @@ const roleRecycler = {
     },
 
     /** @param {Creep} creep **/
-    run: function (creep, store_filter) {
+    run: function (creep, source_targets) {
         // act as a harvester
         if (creep.store[RESOURCE_ENERGY] == 0 && creep.memory.trans) {
             creep.memory.trans = false;
         }
 
-        // const source_targets = creep.room.find(FIND_TOMBSTONES, {
-        //     filter: (structure) => {
-        //         console.log("rest energey:" + structure.store[RESOURCE_ENERGY]);
-        //         return structure.store[RESOURCE_ENERGY] > 0;
-        //     },
-        // });
-        const source_targets = creep.room.find(FIND_RUINS, {
-            filter: (structure) => {
-                console.log("rest energey:" + structure.store[RESOURCE_ENERGY]);
-                return structure.store[RESOURCE_ENERGY] > 0;
-            },
-        });
+        creep.say("recycleing");
         if (
-            creep.store.getFreeCapacity() > 0 && !creep.memory.trans &&
-            source_targets.length
+            creep.store.getFreeCapacity() > 0
         ) {
-            console.log("droped resources:" + source_targets);
+            console.log(TAG + "recycler droped resources:" + source_targets);
             console.log(
-                "resources in range:" +
-                    (creep.withdraw(source_targets[0], RESOURCE_ENERGY)),
+                TAG +
+                    "resources in range:" +
+                    (creep.withdraw(source_targets, RESOURCE_ENERGY) + " or " +
+                        (creep.pickup(source_targets, RESOURCE_ENERGY))),
             );
             if (
-                creep.withdraw(source_targets[0], RESOURCE_ENERGY) ==
+                creep.withdraw(source_targets, RESOURCE_ENERGY) ==
+                    ERR_NOT_IN_RANGE ||
+                creep.pickup(source_targets, RESOURCE_ENERGY) ==
                     ERR_NOT_IN_RANGE
             ) {
-                creep.moveTo(source_targets[0], {
+                creep.moveTo(source_targets, {
                     visualizePathStyle: { stroke: "#ffaa00" },
                 });
             }
         } else {
             const targets = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: (structure) => {
-                    return store_filter(structure);
+                    return ((
+                        structure.structureType == STRUCTURE_CONTAINER ||
+                        structure.structureType == STRUCTURE_EXTENSION ||
+                        structure.structureType == STRUCTURE_SPAWN
+                    ) &&
+                        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) ||
+                        (structure.structureType == STRUCTURE_TOWER &&
+                            structure.store.getFreeCapacity(RESOURCE_ENERGY) >
+                                200);
                 },
             });
-            console.log(targets);
             if (targets) {
                 creep.memory.trans = true;
                 if (
                     creep.transfer(targets, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
                 ) {
-                    creep.say("harvester");
                     creep.moveTo(targets, {
                         visualizePathStyle: { stroke: "#ffffff" },
                     });

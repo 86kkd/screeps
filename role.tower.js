@@ -16,9 +16,9 @@ const roleTower = {
                             structure.structureType == "constructedWall" ||
                             structure.structureType == "rampart"
                         ) {
-                            return structure.hits < 5000;
+                            return structure.hits < 50000;
                         } else {
-                            return structure.hits < structure.hitsMax;
+                            return structure.hits < structure.hitsMax - 100;
                         }
                     },
                 },
@@ -26,8 +26,6 @@ const roleTower = {
             if (closestDamagedStructure) {
                 tower.repair(closestDamagedStructure);
             }
-        } else {
-            // sys_log("tower id error"+tower_id)
         }
     },
 };

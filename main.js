@@ -7,6 +7,8 @@ var {
     init_serval_workers,
     sys_log,
 } = require("function");
+
+
 var roleTower = require("role.tower");
 const { CreateHRSC } = require("HR_Service_Center");
 var spawn = Game.spawns["Spawn1"];
@@ -20,12 +22,7 @@ var tower_ids = {
 };
 const HR_Service_Center = require("HR_Service_Center");
 
-//TODO rewrite creep_counter and finish group
-//TODO source target ctl center
-//TODO Game.spawns['Spawn1'].room.controller.activateSafeMode(); most important
-//TODO construct preority
-//TODO defain constract center
-//TODO tombstone recycle
+const TAG = "MAIN :";
 
 // Game.spawns['Spawn1'].room.createConstructionSite( 23, 22, STRUCTURE_TOWER );
 var stage_ploy = {
@@ -76,10 +73,10 @@ var stage_ploy = {
                 MOVE,
                 MOVE,
             ],
-            num_harvester: 4,
-            num_upgrader: 4,
+            num_harvester: 3,
+            num_upgrader: 3,
             num_builder: 3,
-            num_recycler: 1,
+            num_recycler: 2,
             level: 3,
         },
         {
@@ -261,11 +258,12 @@ module.exports.loop = function () {
     sys_log("roomlevel" + room_level);
     init_serval_workers(spawn, counter, stage_ploy.choise(3));
 
+
     // give ids to mamage
     const HR = HR_Service_Center.CreateHRSC();
     HR.run();
 
     const elapsed = Game.cpu.getUsed() - startCpu;
-    console.log("cpu has used " + elapsed + " CPU time");
-    console.log("cpu limi:" + Game.cpu.tickLimit);
+    console.log(TAG + "cpu has used " + elapsed + " CPU time");
+    console.log(TAG + "cpu limi:" + Game.cpu.tickLimit);
 };
