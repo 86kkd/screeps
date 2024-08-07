@@ -3,13 +3,12 @@ const roleTower = {
     run: (tower_id) => {
         const tower = Game.getObjectById(tower_id);
         if (tower) {
-            const closestHostile = tower.room.find(
+            const closestHostile = tower.pos.findClosestByRange(
                 FIND_HOSTILE_CREEPS,
             );
-            if (closestHostile.length) {
-                console.log(TAG + "attack" + closestHostile[0]);
-                // console.log(TAG + "cheep body:" + closestHostile.body[40].type);
-                tower.attack(closestHostile[1]);
+            if (closestHostile) {
+                tower.attack(closestHostile);
+                console.log(TAG + "attack:" + closestHostile);
             } else {
                 const closestDamagedStructure = tower.pos.findClosestByRange(
                     FIND_STRUCTURES,
