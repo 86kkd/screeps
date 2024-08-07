@@ -53,7 +53,7 @@ class HRSC {
                 structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) ||
                 (structure.structureType == STRUCTURE_TOWER &&
                     structure.store.getFreeCapacity(RESOURCE_ENERGY) >
-                        200);
+                    200);
         };
         const global_store_struct = room.find(FIND_STRUCTURES, {
             filter: (structure) => {
@@ -70,8 +70,8 @@ class HRSC {
             filter: (structure) => {
                 console.log(
                     TAG +
-                        "tombstones rest energy:" +
-                        structure.store[RESOURCE_ENERGY],
+                    "tombstones rest energy:" +
+                    structure.store[RESOURCE_ENERGY],
                 );
                 return structure.store[RESOURCE_ENERGY] > 0;
             },
@@ -80,8 +80,8 @@ class HRSC {
             filter: (structure) => {
                 console.log(
                     TAG +
-                        "ruins rest energey:" +
-                        structure.store[RESOURCE_ENERGY],
+                    "ruins rest energey:" +
+                    structure.store[RESOURCE_ENERGY],
                 );
                 return structure.store[RESOURCE_ENERGY] > 0;
             },

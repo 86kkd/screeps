@@ -231,12 +231,12 @@ const stage_ploy = {
             level: 8,
         },
     ],
-    choise: function (room_level) {
+    choise: function(room_level) {
         return this.ploy[room_level - 1];
     },
 };
 
-module.exports.loop = function () {
+module.exports.loop = function() {
     const startCpu = Game.cpu.getUsed();
 
     const counter = new creep_counter.count();
