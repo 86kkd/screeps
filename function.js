@@ -1,5 +1,5 @@
 const creep_counter = {
-  count: function() {
+  count: function () {
     // this.count=this.count,
     this.harvester = 0;
     this.upgrader = 0;
@@ -40,7 +40,7 @@ function auto_name_spawn(spawn, screep_role, scree_group, body) {
   let result = 0;
   sys_log(
     "body:" + body.worker_body + " " +
-    screep_role + " " + scree_group,
+      screep_role + " " + scree_group,
   );
   do {
     // sys_log("finall spawn"+ screep_role);
@@ -58,13 +58,13 @@ function auto_name_spawn(spawn, screep_role, scree_group, body) {
 function init_serval_workers(spawn, counter, stage_ploy) {
   sys_log(
     "alive screeps:\nharvester:" + counter.harvester + "\n" +
-    "upgrader :" + counter.upgrader + "\n" +
-    "builder  :" + counter.builder + "\n",
+      "upgrader :" + counter.upgrader + "\n" +
+      "builder  :" + counter.builder + "\n",
   );
   sys_log("stage_ploy.harvester:" + stage_ploy.num_harvester);
   sys_log(
     "counter.harvester<stage_ploy.num_harvester:" + counter.harvester <
-    stage_ploy.num_harvester,
+      stage_ploy.num_harvester,
   );
   const group = 1;
   if (counter.harvester < stage_ploy.num_harvester) {
@@ -76,26 +76,26 @@ function init_serval_workers(spawn, counter, stage_ploy) {
     );
     sys_log(
       "spawn Harvester" + (counter.harvester + 1) +
-      " result: " + result,
+        " result: " + result,
     );
   } else if (counter.upgrader < stage_ploy.num_upgrader) {
     const result = auto_name_spawn(spawn, "upgrader", group, body = stage_ploy);
     sys_log(
       "spawn Upgrader" + (counter.upgrader + 1) +
-      " result: " + result,
+        " result: " + result,
     );
   } else if (counter.builder < stage_ploy.num_builder) {
     const result = auto_name_spawn(spawn, "builder", group, body = stage_ploy);
     sys_log(
       "spawn Builder" + (counter.builder + 1) +
-      " result: " + result,
+        " result: " + result,
     );
     // sys_log('spawnCreep signal '+success);
   } else if (counter.recycler < stage_ploy.num_recycler) {
     const result = auto_name_spawn(spawn, "recycler", group, body = stage_ploy);
     sys_log(
       "spawn recycler" + (counter.recycler + 1) +
-      " result: " + result,
+        " result: " + result,
     );
   }
 }
