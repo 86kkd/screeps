@@ -1,31 +1,19 @@
-var roleHarvester = require("role.harvester");
-var roleUpgrader = require("role.upgrader");
-var roleBuilder = require("role.builder");
-var {
+const {
     creep_counter,
     room_targets: room_targets_ctl,
     init_serval_workers,
     sys_log,
 } = require("function");
 
-
-var roleTower = require("role.tower");
-const { CreateHRSC } = require("HR_Service_Center");
-var spawn = Game.spawns["Spawn1"];
-var source_to_harvest = {
-    builder1_source: 1,
-};
+const spawn = Game.spawns["Spawn1"];
 
 // tower_ids
-var tower_ids = {
-    tower1: "6cf4753c8d85837",
-};
 const HR_Service_Center = require("HR_Service_Center");
 
 const TAG = "MAIN :";
 
 // Game.spawns['Spawn1'].room.createConstructionSite( 23, 22, STRUCTURE_TOWER );
-var stage_ploy = {
+const stage_ploy = {
     test: "test",
     ploy: [
         {
@@ -257,7 +245,6 @@ module.exports.loop = function () {
     const room_level = spawn.room.controller.level;
     sys_log("roomlevel" + room_level);
     init_serval_workers(spawn, counter, stage_ploy.choise(3));
-
 
     // give ids to mamage
     const HR = HR_Service_Center.CreateHRSC();

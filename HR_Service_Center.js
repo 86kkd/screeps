@@ -32,6 +32,16 @@ class HRSC {
                 return (source.energy > 0);
             },
         });
+        // const room_source = room.find(FIND_STRUCTURES, {
+        //     filter: (structure) => {
+        //         return ((
+        //             structure.structureType == STRUCTURE_CONTAINER ||
+        //             structure.structureType == STRUCTURE_STORAGE
+        //         ) &&
+        //             structure.store[RESOURCE_ENERGY] > 0);
+        //     },
+        // });
+
         const tower = room.find(FIND_STRUCTURES, {
             filter: (structure) => {
                 return (structure.structureType == STRUCTURE_TOWER);
