@@ -23,8 +23,8 @@ class HRSC {
         const spawn = Game.spawns[spawn_name];
         const room = spawn.room;
         const ctl_level = room.controller.level;
-        const energy_avail = room.energyAvailable;
-        const energy_max = room.energyCapacityAvailable;
+        const energy_available = room.energyAvailable;
+        const energy_capacity = room.energyCapacityAvailable;
 
         const construct_set = room.find(FIND_CONSTRUCTION_SITES);
         const room_source = room.find(FIND_SOURCES, {
@@ -93,8 +93,8 @@ class HRSC {
         // );
 
         console.log(TAG + "Game controller level:" + ctl_level);
-        console.log(TAG + spawn_name + " energy_availble:" + energy_avail);
-        console.log(TAG + spawn_name + " energy_max:" + energy_max);
+        console.log(TAG + spawn_name + " energy_availble:" + energy_available);
+        console.log(TAG + spawn_name + " energy_max:" + energy_capacity);
 
         // for (let i = 0; i < room_source.length; i++) {
         //     const id = room_source[i].id;
