@@ -49,8 +49,24 @@ class Body extends Array {
 }
 
 class creep_factory {
-  constructor() {
+  #spawn_name;
+  #spawn;
+  #room;
+  #ctl_level;
+  #energy_available;
+  #energy_capacity;
+
+  constructor(spawn) {
+    this.#spawn_name = spawn;
+    this.#spawn = Game.spawns[spawn_name];
+    this.#room = this.#spawn.room;
+    this.#ctl_level = this.#room.controller.level;
+    this.#energy_available = this.#room.energyAvailable;
+    this.#energy_capacity = this.#room.energyCapacityAvailable;
     this.creep_body = new Body();
+  }
+
+  set_creep_function() {
   }
 
   create_creep(creep_role, count) {
