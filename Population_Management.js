@@ -53,13 +53,13 @@ class creep_factory {
     this.creep_body = new Body();
   }
 
-  create_creep(body, creep_role, count) {
+  create_creep(creep_role, count) {
     let result;
     let number = 0;
     if (get_creeps_cout(creep_role, spawn_name) < count) {
       do {
         result = spawn.spawnCreep(
-          body,
+          this.creep_body,
           worker.role + number + "_" + spawn_name,
           {
             memory: { role: creep_role, mother: spawn_name },
