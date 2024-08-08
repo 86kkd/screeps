@@ -239,10 +239,10 @@ const stage_ploy = {
 module.exports.loop = function () {
     const startCpu = Game.cpu.getUsed();
 
-    const counter = creep_counter.getInstance();
+    const counter = creep_counter.get_instance();
     init_serval_workers(spawn, counter, stage_ploy.choise(3));
 
-    const HR = HRSC.getInstance();
+    const HR = HRSC.get_instance();
     HR.run();
 
     const elapsed = Game.cpu.getUsed() - startCpu;

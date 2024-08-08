@@ -1,5 +1,5 @@
 class creep_counter {
-  static getInstance() {
+  static get_instance() {
     if (!creep_counter.instance) {
       creep_counter.instance = new creep_counter();
     }

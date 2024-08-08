@@ -7,7 +7,7 @@ const roleRecycler = require("role.recycler");
 
 const TAG = "HR_SERVICE_CENTER :";
 class HRSC {
-    static getInstance() {
+    static get_instance() {
         if (!HRSC.instance) {
             HRSC.instance = new HRSC();
         }

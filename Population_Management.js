@@ -48,6 +48,8 @@ class creep_factory {
   #energy_available;
   #energy_capacity;
   #assign_by_capacity;
+  static get_instance() {
+  }
 
   constructor(spawn) {
     this.#spawn_name = spawn;
@@ -60,6 +62,16 @@ class creep_factory {
   }
 
   set_creep_function(config, assign_by_capacity = true) {
+    let energy_to_use;
+    if (assign_by_capacity) {
+      energy_to_use = this.#energy_capacity;
+    } else {
+      this.#energy_capacity = this.#energy_available;
+    }
+    for (const body_type in config.body_cost_assign) {
+      config.assigned_body[body_type] = config.body_cost_assign *
+        energy_to_use;
+    }
   }
 
   create_creep(creep_role, count) {
