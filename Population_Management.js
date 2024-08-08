@@ -1,3 +1,4 @@
+"use strict";
 const spawn_name = "Spawn1";
 
 const spawn = Game.spawns[spawn_name];
@@ -19,37 +20,31 @@ const get_num_creeps = (role, mother) => {
   return num;
 };
 
-console.log(body_cost[MOVE]);
-
-const worker = {
-  own_body: [MOVE, WORK, CARRY],
-  role: { "harvester": 3, "upgrader": 3, "builder": 2, "recycler": 2 },
-};
-
 class Body extends Array {
+  #body_cost = {
+    move: 50,
+    work: 100,
+    carry: 50,
+    attack: 80,
+    heal: 250,
+    claim: 600,
+    tough: 10,
+  };
   constructor(...args) {
     super(...args);
     this.cost = 0;
   }
 
   push(...items) {
-    const body_cost = {
-      move: 50,
-      work: 100,
-      carry: 50,
-      attack: 80,
-      heal: 250,
-      claim: 600,
-      tough: 10,
-    };
     for (const i = 0; i < items.length; i++) {
-      this.cost += body_cost[items[i]];
+      this.cost += this.#body_cost[items[i]];
     }
-    return super.push(...items);
+    return this.cost;
   }
 
   pop() {
-    this.cost -= body_cost[super.pop()];
+    this.cost -= this.#body_cost[super.pop()];
+    return this.cost;
   }
 }
 
