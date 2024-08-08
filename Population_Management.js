@@ -1,12 +1,4 @@
 "use strict";
-const spawn_name = "Spawn1";
-
-const spawn = Game.spawns[spawn_name];
-const room = spawn.room;
-const ctl_level = room.controller.level;
-const energy_available = room.energyAvailable;
-const energy_capacity = room.energyCapacityAvailable;
-
 const get_creeps_cout = (role, mother) => {
   let num = 0;
 
@@ -74,7 +66,7 @@ class creep_factory {
     let number = 0;
     if (get_creeps_cout(creep_role, spawn_name) < count) {
       do {
-        result = spawn.spawnCreep(
+        result = this.#spawn.spawnCreep(
           this.creep_body,
           worker.role + number + "_" + spawn_name,
           {
