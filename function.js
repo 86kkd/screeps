@@ -1,5 +1,20 @@
-const creep_counter = {
-  count: function () {
+class creep_counter {
+  static getInstance() {
+    if (!creep_counter.instance) {
+      creep_counter.instance = new creep_counter();
+    }
+    return creep_counter.instance;
+  }
+
+  constructor() {
+    this.harvester;
+    this.upgrader;
+    this.builder;
+    this.recycler;
+    this.other;
+    this.harvester;
+  }
+  count() {
     // this.count=this.count,
     this.harvester = 0;
     this.upgrader = 0;
@@ -20,8 +35,8 @@ const creep_counter = {
       }
     }
     return this;
-  },
-};
+  }
+}
 
 const room_targets_ctl = {
   source_target: null,
@@ -56,6 +71,7 @@ function auto_name_spawn(spawn, screep_role, scree_group, body) {
  * @param {*} counter
  */
 function init_serval_workers(spawn, counter, stage_ploy) {
+  counter.count();
   sys_log(
     "alive screeps:\nharvester:" + counter.harvester + "\n" +
       "upgrader :" + counter.upgrader + "\n" +
