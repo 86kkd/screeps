@@ -8,7 +8,7 @@ const {
 const spawn = Game.spawns["Spawn1"];
 
 // tower_ids
-const HR_Service_Center = require("HR_Service_Center");
+const { HRSC, CreateHRSC } = require("HR_Service_Center");
 
 const TAG = "MAIN :";
 
@@ -242,7 +242,7 @@ module.exports.loop = function () {
     const counter = new creep_counter.count();
     init_serval_workers(spawn, counter, stage_ploy.choise(3));
 
-    const HR = HR_Service_Center.CreateHRSC();
+    const HR = HRSC.getInstance();
     HR.run();
 
     const elapsed = Game.cpu.getUsed() - startCpu;
