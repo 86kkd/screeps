@@ -1,4 +1,5 @@
 "use strict";
+const TAG = "PM: ";
 const get_creeps_cout = (role, mother) => {
   let num = 0;
 
@@ -58,10 +59,12 @@ class creep_factory {
     this.#ctl_level = this.#room.controller.level;
     this.#energy_available = this.#room.energyAvailable;
     this.#energy_capacity = this.#room.energyCapacityAvailable;
-    this.creep_body = new Body();
+    this.creep_body;
   }
 
   set_creep_function(config, assign_by_capacity = true) {
+    // count body cost to use
+    this.create_creep = new Body();
     let energy_to_use;
     if (assign_by_capacity) {
       energy_to_use = this.#energy_capacity;
@@ -69,9 +72,28 @@ class creep_factory {
       this.#energy_capacity = this.#energy_available;
     }
     for (const body_type in config.body_cost_assign) {
-      config.assigned_body[body_type] = config.body_cost_assign *
-        energy_to_use;
+      const body_part_num = Math.floor(
+        config.body_cost_assign[body_type] * energy_to_use,
+      );
+
+      for (let i = 0; i < body_part_num; i++) {
+        this.creep_body.push(body_type);
+      }
     }
+    while (this.creep_body.cost > energy_to_use) {
+      this.creep_body.pop();
+    }
+    while (this.creep_body.cost < energy_to_use) {
+      // if the lest energy can afford for MOVE
+      if ((this.creep_body.cost - energy_to_use) > 50) {
+        this.creep_body.unshift(MOVE);
+      } else if ((this.creep_body.cost - energy_to_use) > 10) {
+        this.creep_body.unshift(TOUGH);
+      } else {
+        console.log(TAG + `assagn body error`);
+      }
+    }
+    // creat body templete to build
   }
 
   create_creep(creep_role, count) {

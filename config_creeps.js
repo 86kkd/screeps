@@ -7,7 +7,6 @@ const harvester = {
   },
   role: "harvester",
   count: 3,
-  assignde_body,
 };
 
 module.exports = { harvester };
