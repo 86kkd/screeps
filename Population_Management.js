@@ -47,6 +47,7 @@ class creep_factory {
   #ctl_level;
   #energy_available;
   #energy_capacity;
+  #assign_by_capacity;
 
   constructor(spawn) {
     this.#spawn_name = spawn;
@@ -58,19 +59,19 @@ class creep_factory {
     this.creep_body = new Body();
   }
 
-  set_creep_function() {
+  set_creep_function(config, assign_by_capacity = true) {
   }
 
   create_creep(creep_role, count) {
     let result;
     let number = 0;
-    if (get_creeps_cout(creep_role, spawn_name) < count) {
+    if (get_creeps_cout(creep_role, this.#spawn_name) < count) {
       do {
         result = this.#spawn.spawnCreep(
           this.creep_body,
-          worker.role + number + "_" + spawn_name,
+          worker.role + number + "_" + this.#spawn_name,
           {
-            memory: { role: creep_role, mother: spawn_name },
+            memory: { role: creep_role, mother: this.#spawn_name },
           },
         );
         number++;
