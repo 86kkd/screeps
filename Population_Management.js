@@ -7,7 +7,7 @@ const ctl_level = room.controller.level;
 const energy_available = room.energyAvailable;
 const energy_capacity = room.energyCapacityAvailable;
 
-const get_num_creeps = (role, mother) => {
+const get_creeps_cout = (role, mother) => {
   let num = 0;
 
   for (const name in Game.creeps) {
@@ -48,27 +48,25 @@ class Body extends Array {
   }
 }
 
-for (const creep_role in worker.role) {
-  const body = new Body();
-  let result;
-  let number = 0;
-  do {
-    body.push(WORK);
-    body.push(MOVE);
-    body.push(CARRY);
-    body.push(MOVE);
-  } while (body.cost < energy_capacity);
-  if (body_cost > energy_capacity) {
-    body.pop();
-    body.push(MOVE);
+class creep_factory {
+  constructor() {
+    this.creep_body = new Body();
   }
 
-  if (get_num_creeps(creep_role, spawn_name) < worker.role[creep_role]) {
-    do {
-      result = spawn.spawnCreep(body, worker.role + number + "_" + spawn_name, {
-        memory: { role: creep_role, mother: spawn_name },
-      });
-      number++;
-    } while (result == ERR_NAME_EXISTS);
+  create_creep(body, creep_role, count) {
+    let result;
+    let number = 0;
+    if (get_creeps_cout(creep_role, spawn_name) < count) {
+      do {
+        result = spawn.spawnCreep(
+          body,
+          worker.role + number + "_" + spawn_name,
+          {
+            memory: { role: creep_role, mother: spawn_name },
+          },
+        );
+        number++;
+      } while (result == ERR_NAME_EXISTS);
+    }
   }
 }

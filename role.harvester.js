@@ -32,7 +32,6 @@ const roleHarvester = {
                     return store_filter(structure);
                 },
             });
-            console.log(TAG + targets);
             if (targets) {
                 creep.memory.trans = true;
                 if (

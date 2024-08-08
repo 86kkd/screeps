@@ -1,3 +1,4 @@
+"use strict";
 const roleHarvester = require("role.harvester");
 const roleUpgrader = require("role.upgrader");
 const roleBuilder = require("role.builder");
@@ -120,7 +121,7 @@ class HRSC {
                 } else if (construct_set.length) {
                     roleBuilder.run(creep, room_source[0]);
                 } else {
-                    roleUpgrader.run(creep, room_resources[0]);
+                    roleUpgrader.run(creep, room_source[0]);
                 }
             }
             if (creep.memory.role == "upgrader") {
