@@ -1,5 +1,5 @@
 "use strict";
-const TAG = "PM: ";
+const TAG = "PopMgr: ";
 const get_creeps_cout = (role, mother) => {
   let num = 0;
 
@@ -32,12 +32,16 @@ class Body extends Array {
   }
 
   push(...items) {
-    let cost = 0;
-    for (const i = 0; i < items.length; i++) {
-      this.cost += this.#body_cost[items[i]];
-      cost += this.#body_cost[items[i]];
+    let totalCost = 0;
+    for (const item of items) {
+      if (this.#body_cost.hasOwnProperty(item)) {
+        this.cost += this.#body_cost[item];
+        totalCost += this.#body_cost[item];
+      } else {
+        console.warn(`Item ${item} not found in #body_cost.`);
+      }
     }
-    return cost;
+    return totalCost;
   }
 
   pop() {
@@ -53,13 +57,16 @@ class creep_factory {
   #ctl_level;
   #energy_available;
   #energy_capacity;
-  #assign_by_capacity;
-  static get_instance() {
+  static get_instance(spawn) {
+    if (!creep_factory.instance) {
+      creep_factory.instance = new creep_factory(spawn);
+    }
+    return creep_factory.instance;
   }
 
   constructor(spawn) {
     this.#spawn_name = spawn;
-    this.#spawn = Game.spawns[spawn_name];
+    this.#spawn = Game.spawns[this.#spawn_name];
     this.#room = this.#spawn.room;
     this.#ctl_level = this.#room.controller.level;
     this.#energy_available = this.#room.energyAvailable;
@@ -82,6 +89,7 @@ class creep_factory {
       );
       while ((body_part_num - this.creep_body.get_body_cost(body_type)) > 0) {
         body_part_num -= this.creep_body.push(body_type);
+        console.log(TAG + `in assign body while`)
       }
     }
     // check if all energy planned is assiged
@@ -100,7 +108,7 @@ class creep_factory {
     }
   }
 
-  create_creep(config, assign_by_capacity) {
+  create_creep(config, assign_by_capacity = true) {
     let result;
     let number = 0;
     const creep_role = config.role;
@@ -121,3 +129,4 @@ class creep_factory {
     }
   }
 }
+module.exports = creep_factory;
