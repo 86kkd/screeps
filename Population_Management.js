@@ -27,12 +27,17 @@ class Body extends Array {
     super(...args);
     this.cost = 0;
   }
+  get_body_cost(body) {
+    return this.#body_cost[body];
+  }
 
   push(...items) {
+    let cost = 0;
     for (const i = 0; i < items.length; i++) {
       this.cost += this.#body_cost[items[i]];
+      cost += this.#body_cost[items[i]];
     }
-    return this.cost;
+    return cost;
   }
 
   pop() {
@@ -72,25 +77,25 @@ class creep_factory {
       this.#energy_capacity = this.#energy_available;
     }
     for (const body_type in config.body_cost_assign) {
-      const body_part_num = Math.floor(
+      let body_part_num = Math.floor(
         config.body_cost_assign[body_type] * energy_to_use,
       );
-
-      for (let i = 0; i < body_part_num; i++) {
-        this.creep_body.push(body_type);
+      while ((body_part_num - this.creep_body.get_body_cost(body_type)) > 0) {
+        body_part_num -= this.creep_body.push(body_type);
       }
     }
+    // check if all energy planned is assiged
     while (this.creep_body.cost > energy_to_use) {
       this.creep_body.pop();
     }
     while (this.creep_body.cost < energy_to_use) {
-      // if the lest energy can afford for MOVE
+      // if the lest energy can afford for MOVE then push ahead
       if ((this.creep_body.cost - energy_to_use) > 50) {
         this.creep_body.unshift(MOVE);
       } else if ((this.creep_body.cost - energy_to_use) > 10) {
         this.creep_body.unshift(TOUGH);
       } else {
-        console.log(TAG + `assagn body error`);
+        console.log(TAG + `assign body error from config error`);
       }
     }
     // creat body templete to build
