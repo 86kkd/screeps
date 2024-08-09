@@ -69,7 +69,7 @@ class creep_factory {
 
   set_creep_function(config, assign_by_capacity = true) {
     // count body cost to use
-    this.create_creep = new Body();
+    this.creep_body = new Body();
     let energy_to_use;
     if (assign_by_capacity) {
       energy_to_use = this.#energy_capacity;
@@ -98,7 +98,6 @@ class creep_factory {
         console.log(TAG + `assign body error from config error`);
       }
     }
-    // creat body templete to build
   }
 
   create_creep(creep_role, count) {
