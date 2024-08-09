@@ -1,17 +1,17 @@
 const TAG = "MAIN :";
 const { HRSC, CreateHRSC } = require("HR_Service_Center");
-const PopMgr = require("Population_Management");
-const creep_config = require("config_creeps")
+const { creep_factory } = require("pm");
+const creep_config = require("config_creeps");
 
-module.exports.loop = function() {
+module.exports.loop = function () {
     const startCpu = Game.cpu.getUsed();
 
     const spawn = "Spawn1";
-    const population_mgr = PopMgr.get_instance(spawn);
+    const population_mgr = creep_factory.get_instance(spawn);
     const HR = HRSC.get_instance();
     for (const config in creep_config) {
-        console.log(`start creat creep`)
-        // population_mgr.create_creep(creep_config[config])
+        console.log(`start creat creep`);
+        // population_mgr.create_creep(creep_config[config]);
     }
     HR.run();
 

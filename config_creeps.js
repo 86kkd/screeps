@@ -7,7 +7,7 @@ const config = {
       work: 0.5,
     },
     role: "harvester",
-    count: 3,
+    count: 2,
   },
   upgrader: {
     body: [MOVE, CARRY, WORK],
@@ -17,7 +17,7 @@ const config = {
       work: 0.5,
     },
     role: "upgrader",
-    count: 3,
+    count: 2,
   },
 
   builder: {
