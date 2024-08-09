@@ -1,12 +1,56 @@
-const harvester = {
-  body: [MOVE, CARRY, WORK],
-  body_cost_assign: {
-    move: 0.25,
-    carry: 0.25,
-    work: 0.5,
+const config = {
+  harvester: {
+    body: [MOVE, CARRY, WORK],
+    body_cost_assign: {
+      move: 0.25,
+      carry: 0.25,
+      work: 0.5,
+    },
+    role: "harvester",
+    count: 3,
   },
-  role: "harvester",
-  count: 3,
-};
+  upgrader: {
+    body: [MOVE, CARRY, WORK],
+    body_cost_assign: {
+      move: 0.25,
+      carry: 0.25,
+      work: 0.5,
+    },
+    role: "upgrader",
+    count: 3,
+  },
 
-module.exports = { harvester };
+  builder: {
+    body: [MOVE, CARRY, WORK],
+    body_cost_assign: {
+      move: 0.25,
+      carry: 0.25,
+      work: 0.5,
+    },
+    role: "builder",
+    count: 2,
+  },
+
+  recycler: {
+    body: [MOVE, CARRY, WORK],
+    body_cost_assign: {
+      move: 0.25,
+      carry: 0.25,
+      work: 0.5,
+    },
+    role: "recycler",
+    count: 2,
+  },
+
+  transfer: {
+    body: [MOVE, CARRY, WORK],
+    body_cost_assign: {
+      move: 0.25,
+      carry: 0.25,
+      work: 0.5,
+    },
+    role: "transfer",
+    count: 2,
+  },
+};
+module.exports = config;

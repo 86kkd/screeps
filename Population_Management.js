@@ -67,7 +67,7 @@ class creep_factory {
     this.creep_body;
   }
 
-  set_creep_function(config, assign_by_capacity = true) {
+  config_creep_body(config, assign_by_capacity = true) {
     // count body cost to use
     this.creep_body = new Body();
     let energy_to_use;
@@ -100,9 +100,13 @@ class creep_factory {
     }
   }
 
-  create_creep(creep_role, count) {
+  create_creep(config, assign_by_capacity) {
     let result;
     let number = 0;
+    const creep_role = config.role;
+    const count = config.count;
+    this.config_creep_body(config, assign_by_capacity);
+
     if (get_creeps_cout(creep_role, this.#spawn_name) < count) {
       do {
         result = this.#spawn.spawnCreep(
