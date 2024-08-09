@@ -41,16 +41,15 @@ const config = {
     role: "recycler",
     count: 2,
   },
-
-  transfer: {
-    body: [MOVE, CARRY, WORK],
-    body_cost_assign: {
-      move: 0.25,
-      carry: 0.25,
-      work: 0.5,
-    },
-    role: "transfer",
-    count: 2,
-  },
+  // transfer: {
+  //   body: [MOVE, CARRY, WORK],
+  //   body_cost_assign: {
+  //     move: 0.25,
+  //     carry: 0.25,
+  //     work: 0.5,
+  //   },
+  //   role: "transfer",
+  //   count: 2,
+  // },
 };
 module.exports = config;

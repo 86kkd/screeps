@@ -127,7 +127,28 @@ class creep_factory {
     const count = config.count;
     this.config_creep_body(config, assign_by_capacity);
     let array = [];
-    array.push(MOVE, MOVE, MOVE, CARRY, WORK);
+    array.push(
+      MOVE,
+      MOVE,
+      MOVE,
+      MOVE,
+      MOVE,
+      MOVE,
+      MOVE,
+      CARRY,
+      CARRY,
+      CARRY,
+      CARRY,
+      CARRY,
+      CARRY,
+      WORK,
+      WORK,
+      WORK,
+      WORK,
+      WORK,
+      WORK,
+      WORK,
+    );
 
     if (get_creeps_cout(creep_role, this.spawn_name) < count) {
       do {

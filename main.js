@@ -12,14 +12,11 @@ module.exports.loop = function () {
     const HR = HRSC.get_instance();
     for (const config in creep_config) {
         console.log(TAG + `start creat creep`);
-        population_mgr.create_creep(creep_config["harvester"]);
+        population_mgr.create_creep(creep_config[config]);
     }
     HR.run();
 
     const elapsed = Game.cpu.getUsed() - startCpu;
     console.log(`${TAG} cpu has used ${elapsed} CPU time`);
     console.log(`${TAG} cpu tickLimit: ${Game.cpu.tickLimit}`);
-    // for (const spawn in Game.spawns) {
-    //     console.log(spawn);
-    // }
 };
