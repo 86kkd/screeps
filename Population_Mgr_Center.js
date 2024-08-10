@@ -199,6 +199,9 @@ class creep_factory {
     this.config_creep_body(config, assign_by_capacity);
 
     if (get_creeps_cout(creep_role, this.spawn_name) < count) {
+      if (this.creep_body.cost > this.energy_available) {
+        console.log(TAG + `energy is not enouth for creep:${this.creep_body}`);
+      }
       do {
         result = this.spawn.spawnCreep(
           this.creep_body,
