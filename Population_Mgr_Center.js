@@ -115,6 +115,10 @@ class creep_factory {
         energy_to_use = this.energy_capacity;
       } else {
         energy_to_use = config.energy_plan;
+        console.log(
+          TAG +
+            `Wornging: erengy_plan:${config.energy_plan} is to huge using room_energy_capacity:${this.energy_capacity} `,
+        );
       }
     } else if (config.energy_plan == "available") { // energy available in a room
       this.energy_capacity = this.energy_available;
