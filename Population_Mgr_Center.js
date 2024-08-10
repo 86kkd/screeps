@@ -108,18 +108,36 @@ class creep_factory {
       this.energy_capacity = this.energy_available;
     }
     console.log(TAG + `come in config creep body`);
+
+    // count body_cost
+    const body_part = {};
+    let total_body_part = 0;
     for (const body_type in config.body_cost_assign) {
-      let body_part_num = Math.floor(
+      body_part[body_type] = {};
+      body_part[body_type].cost = Math.floor(
         config.body_cost_assign[body_type] * energy_to_use,
       );
+      body_part[body_type].num = Math.floor(
+        body_part[body_type].cost / this.creep_body.body_cost[body_type],
+      );
+      total_body_part += body_part[body_type].num;
+    }
+    if (total_body_part > 50){
+
+    }
+
+    // assign body
+    for (const body_type in config.body_cost_assign) {
       while (
-        (body_part_num - this.creep_body.get_body_cost(body_type)) > 0 &&
+        (body_part[body_type].cost -
+          this.creep_body.get_body_cost(body_type)) > 0 &&
         !this.creep_body.is_off_capacity()
       ) {
-        body_part_num -= this.creep_body.push(body_type);
+        body_part[body_type].cost -= this.creep_body.push(body_type);
         console.log(TAG + `in assign body while`);
       }
     }
+
     // check if all energy planned is assiged
     while (this.creep_body.cost > energy_to_use) {
       this.creep_body.pop();
