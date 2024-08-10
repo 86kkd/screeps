@@ -35,44 +35,32 @@ class Body extends Array {
     return this.length == 50;
   }
 
-  push(...items) {
+  addItems(items, method) {
     let totalCost = 0;
     if (this.length < 50) {
       for (const item of items) {
         this.cost += this.body_cost[item];
         totalCost += this.body_cost[item];
-        if (this.body[item] == undefined) {
+        if (this.body[item] === undefined) {
           this.body[item] = 0;
         }
         this.body[item] += 1;
       }
-      super.push(...items);
+      method.call(this, ...items);
     } else {
       console.log(
-        TAG + `Error: Body is abready full: this.length=${this.length}`,
+        TAG + `Error: Body is already full: this.length=${this.length}`,
       );
     }
     return totalCost;
   }
 
+  push(...items) {
+    return this.addItems(items, super.push);
+  }
+
   unshift(...items) {
-    let totalCost = 0;
-    if (this.length < 50) {
-      for (const item of items) {
-        this.cost += this.body_cost[item];
-        totalCost += this.body_cost[item];
-        if (this.body[item] == undefined) {
-          this.body[item] = 0;
-        }
-        this.body[item] += 1;
-      }
-      super.unshift(...items);
-    } else {
-      console.log(
-        TAG + `Error: Body is abready full: this.length=${this.length}`,
-      );
-    }
-    return totalCost;
+    return this.addItems(items, super.unshift);
   }
 
   pop() {
