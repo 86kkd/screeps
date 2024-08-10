@@ -15,9 +15,13 @@ const roleRecycler = {
         }
 
         creep.say("recycleing");
-        if (
-            creep.store.getFreeCapacity() > 0
-        ) {
+        console.log(
+            TAG +
+                `getCapacity:\n${creep.store.getCapacity()}\ngetFreeCapacity${
+                    creep.store.getFreeCapacity(RESOURCE_ENERGY)
+                }`,
+        );
+        if (creep.store.getFreeCapacity() == creep.store.getCapacity()) {
             console.log(TAG + "recycler droped resources:" + source_targets);
             console.log(
                 TAG +
