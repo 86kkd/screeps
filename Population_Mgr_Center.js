@@ -102,14 +102,24 @@ class creep_factory {
     this.creep_body;
   }
 
-  config_creep_body(config, assign_by_capacity = true) {
+  config_creep_body(config, energy_assign = "capacity") {
     // count body cost to use
     this.creep_body = new Body();
     let energy_to_use;
-    if (assign_by_capacity) {
+    if (config.energy_plan == "capacity") {
       energy_to_use = this.energy_capacity;
-    } else {
+    } else if (
+      typeof config.energy_plan === "number" && !isNaN(config.energy_plan)
+    ) {
+      energy_to_use = config.energy_plan;
+    } else if (config.energy_plan == "available") { // energy available in a room
       this.energy_capacity = this.energy_available;
+    } else {
+      console.log(
+        TAG +
+          `Error: config_plan:{${config.energy_plan}} is not in [Number ,'capacity','available']`,
+      );
+      return;
     }
 
     // count body_cost
@@ -191,7 +201,7 @@ class creep_factory {
     }
   }
 
-  create_creep(config, assign_by_capacity = true) {
+  create_creep(config, energy_assign = "capacity") {
     this.spawn = Game.spawns[this.spawn_name];
     this.room = this.spawn.room;
     this.ctl_level = this.room.controller.level;
@@ -201,7 +211,7 @@ class creep_factory {
     let number = 0;
     const creep_role = config.role;
     const count = config.count;
-    this.config_creep_body(config, assign_by_capacity);
+    this.config_creep_body(config, energy_assign);
 
     if (get_creeps_cout(creep_role, this.spawn_name) < count) {
       if (this.creep_body.cost > this.energy_available) {

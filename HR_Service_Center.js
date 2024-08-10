@@ -95,11 +95,6 @@ class HRSC {
             },
         });
 
-        // const container = Game.getObjectById("24793b8a1f269af");
-        // console.log(
-        //     TAG + "container free:" + container.store.getFreeCapacity(),
-        // );
-
         console.log(TAG + "Game controller level:" + ctl_level);
         console.log(TAG + spawn_name + " energy_availble:" + energy_available);
         console.log(TAG + spawn_name + " energy_max:" + energy_capacity);

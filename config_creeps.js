@@ -7,6 +7,7 @@ const config = {
       work: 0.5,
     },
     role: "harvester",
+    energy_plan: 2000,
     count: 0,
   },
   upgrader: {
@@ -17,6 +18,7 @@ const config = {
       work: 0.5,
     },
     role: "upgrader",
+    energy_plan: 2000,
     count: 1,
   },
 
@@ -28,6 +30,7 @@ const config = {
       work: 0.5,
     },
     role: "builder",
+    energy_plan: 2000,
     count: 0,
   },
 
@@ -39,6 +42,7 @@ const config = {
       work: 0.5,
     },
     role: "recycler",
+    energy_plan: 2000,
     count: 2,
   },
   // transfer: {

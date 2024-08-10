@@ -11,7 +11,7 @@ module.exports.loop = function () {
     const population_mgr = creep_factory.get_instance(spawn);
     const HR = HRSC.get_instance();
     for (const config in creep_config) {
-        population_mgr.create_creep(creep_config[config], true);
+        population_mgr.create_creep(creep_config[config]);
     }
     HR.run();
 
