@@ -31,7 +31,7 @@ class Body extends Array {
   get_body_cost(body) {
     return this.body_cost[body];
   }
-  is_get_capacity() {
+  is_off_capacity() {
     return this.length == 50;
   }
 
@@ -126,7 +126,7 @@ class creep_factory {
       );
       while (
         (body_part_num - this.creep_body.get_body_cost(body_type)) > 0 &&
-        !this.creep_body.is_get_capacity()
+        !this.creep_body.is_off_capacity()
       ) {
         body_part_num -= this.creep_body.push(body_type);
         console.log(TAG + `in assign body while`);
@@ -139,7 +139,7 @@ class creep_factory {
     console.log(TAG + `check if energy used overflow`);
     while (
       this.creep_body.cost < energy_to_use &&
-      !this.creep_body.is_get_capacity()
+      !this.creep_body.is_off_capacity()
     ) {
       console.log(TAG + `check if assigned all body: ${this.creep_body}`);
       //   // if the lest energy can afford for MOVE then push ahead
