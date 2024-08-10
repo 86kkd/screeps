@@ -129,11 +129,10 @@ class creep_factory {
     // assign body
     for (const body_type in config.body_cost_assign) {
       while (
-        (body_part[body_type].cost -
-          this.creep_body.get_body_cost(body_type)) > 0 &&
+        --body_part[body_type].num > 0 &&
         !this.creep_body.is_off_capacity()
       ) {
-        body_part[body_type].cost -= this.creep_body.push(body_type);
+        this.creep_body.push(body_type);
         console.log(TAG + `in assign body while`);
       }
     }
