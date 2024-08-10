@@ -111,7 +111,11 @@ class creep_factory {
     } else if (
       typeof config.energy_plan === "number" && !isNaN(config.energy_plan)
     ) {
-      energy_to_use = config.energy_plan;
+      if (config.energy_plan > this.energy_capacity) {
+        energy_to_use = this.energy_capacity;
+      } else {
+        energy_to_use = config.energy_plan;
+      }
     } else if (config.energy_plan == "available") { // energy available in a room
       this.energy_capacity = this.energy_available;
     } else {
