@@ -1,41 +1,46 @@
-function gaussElimination(augmentedMatrix) {
-  const numRows = augmentedMatrix.length;
-  const numCols = augmentedMatrix[0].length;
-  for (let i = 0; i < numRows; i++) {
+function gaussElimination(matrix) {
+  const n = matrix.length;
+
+  for (let i = 0; i < n; i++) {
     let maxRow = i;
-    for (let j = i + 1; j < numRows; j++) {
-      if (
-        Math.abs(augmentedMatrix[j][i]) > Math.abs(augmentedMatrix[maxRow][i])
-      ) {
-        maxRow = j;
+    for (let k = i + 1; k < n; k++) {
+      if (Math.abs(matrix[k][i]) > Math.abs(matrix[maxRow][i])) {
+        maxRow = k;
       }
     }
-    [augmentedMatrix[i], augmentedMatrix[maxRow]] = [
-      augmentedMatrix[maxRow],
-      augmentedMatrix[i],
-    ];
 
-    for (let j = i + 1; j < numRows; j++) {
-      const factor = augmentedMatrix[j][i] / augmentedMatrix[i][i];
+    [matrix[i], matrix[maxRow]] = [matrix[maxRow], matrix[i]];
 
-      for (let k = i; k < numCols; k++) {
-        augmentedMatrix[j][k] -= factor * augmentedMatrix[i][k];
+    for (let j = i + 1; j < n; j++) {
+      const factor = matrix[j][i] / matrix[i][i];
+      for (let k = i; k < n; k++) {
+        matrix[j][k] -= factor * matrix[i][k];
       }
     }
   }
-  const solution = [];
 
-  for (let i = numRows - 1; i >= 0; i--) {
+  const ratios = new Array(n).fill(1);
+  for (let i = n - 1; i >= 0; i--) {
     let sum = 0;
-    for (let j = i + 1; j < numCols - 1; j++) {
-      sum += augmentedMatrix[i][j] * solution[numCols - 2 - j + i];
+    for (let j = i + 1; j < n; j++) {
+      sum += matrix[i][j] * ratios[j];
     }
-
-    solution.push(
-      (augmentedMatrix[i][numCols - 1] - sum) / augmentedMatrix[i][i],
-    );
+    ratios[i] = 1;
+    for (let k = i + 1; k < n; k++) {
+      ratios[i] -= matrix[i][k] * ratios[k];
+    }
+    ratios[i] /= matrix[i][i];
   }
-  return solution.reverse();
+
+  const baseRatio = ratios[0];
+  for (let i = 0; i < n; i++) {
+    ratios[i] /= baseRatio;
+  }
+
+  return ratios;
+}
+function transpose(matrix) {
+  return matrix[0].map((_, colIndex) => matrix.map((row) => row[colIndex]));
 }
 
-module.exports = { gaussElimination };
+module.exports = { gaussElimination, transpose };
