@@ -102,7 +102,7 @@ class creep_factory {
     this.creep_body;
   }
 
-  config_creep_body(config, energy_assign = "capacity") {
+  config_creep_body(config) {
     // count body cost to use
     this.creep_body = new Body();
     let energy_to_use;
@@ -201,7 +201,7 @@ class creep_factory {
     }
   }
 
-  create_creep(config, energy_assign = "capacity") {
+  create_creep(config) {
     this.spawn = Game.spawns[this.spawn_name];
     this.room = this.spawn.room;
     this.ctl_level = this.room.controller.level;
@@ -211,7 +211,7 @@ class creep_factory {
     let number = 0;
     const creep_role = config.role;
     const count = config.count;
-    this.config_creep_body(config, energy_assign);
+    this.config_creep_body(config);
 
     if (get_creeps_cout(creep_role, this.spawn_name) < count) {
       if (this.creep_body.cost > this.energy_available) {
