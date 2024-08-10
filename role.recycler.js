@@ -10,18 +10,27 @@ const roleRecycler = {
     /** @param {Creep} creep **/
     run: function (creep, source_targets) {
         // act as a harvester
-        if (creep.store[RESOURCE_ENERGY] == 0 && creep.memory.trans) {
-            creep.memory.trans = false;
+        if (creep.store[RESOURCE_ENERGY] == 0 && creep.memory.working) {
+            creep.memory.working = false;
         }
 
-        creep.say("recycleing");
-        console.log(
-            TAG +
-                `getCapacity:\n${creep.store.getCapacity()}\ngetFreeCapacity${
-                    creep.store.getFreeCapacity(RESOURCE_ENERGY)
-                }`,
-        );
-        if (creep.store.getFreeCapacity() == creep.store.getCapacity()) {
+        creep.say("♻️");
+
+        // when the level of cheep if great ,the harvest action may make droked resources
+        // and resource api is different from other stortage api this function solved this error
+        const if_can_carry = () => {
+            if (Object.keys(source_targets).includes("_amount")) {
+                return creep.store.getFreeCapacity() > source_targets.amount;
+            } else {
+                return creep.store.getFreeCapacity() >
+                    source_targets.store[RESOURCE_ENERGY];
+            }
+        };
+
+        if (
+            creep.store.getFreeCapacity() == creep.store.getCapacity() ||
+            if_can_carry()
+        ) {
             console.log(TAG + "recycler droped resources:" + source_targets);
             console.log(
                 TAG +
@@ -55,7 +64,7 @@ const roleRecycler = {
                 },
             });
             if (targets) {
-                creep.memory.trans = true;
+                creep.memory.working = true;
                 if (
                     creep.transfer(targets, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
                 ) {

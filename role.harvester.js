@@ -11,12 +11,12 @@ const roleHarvester = {
     run: function (creep, source_targets, store_filter) {
         // act as a harvester
         // source_targets = "297e3b8710cc0c9";
-        if (creep.store[RESOURCE_ENERGY] == 0 && creep.memory.trans) {
-            creep.memory.trans = false;
+        if (creep.store[RESOURCE_ENERGY] == 0 && creep.memory.working) {
+            creep.memory.working = false;
         }
 
         if (
-            creep.store.getFreeCapacity() > 0 && !creep.memory.trans
+            creep.store.getFreeCapacity() > 0 && !creep.memory.working
         ) {
             if (
                 creep.harvest(source_targets) == ERR_NOT_IN_RANGE ||
@@ -33,7 +33,7 @@ const roleHarvester = {
                 },
             });
             if (targets) {
-                creep.memory.trans = true;
+                creep.memory.working = true;
                 if (
                     creep.transfer(targets, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
                 ) {

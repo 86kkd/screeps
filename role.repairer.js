@@ -1,13 +1,13 @@
 const roleRepairer = {
 	/** @param {Creep} creep **/
-	run: function(creep) {
-		if (creep.memory.repairing && creep.store[RESOURCE_ENERGY] == 0) {
-			creep.memory.repairing = false;
+	run: function (creep) {
+		if (creep.memory.working && creep.store[RESOURCE_ENERGY] == 0) {
+			creep.memory.working = false;
 		}
-		if (!creep.memory.repairing && creep.store.getFreeCapacity() == 0) {
-			creep.memory.repairing = true;
+		if (!creep.memory.working && creep.store.getFreeCapacity() == 0) {
+			creep.memory.working = true;
 		}
-		if (creep.memory.repairing) {
+		if (creep.memory.working) {
 			let targets = creep.room.find(FIND_STRUCTURES, {
 				filter: (object) => object.hits < object.hitsMax,
 			});

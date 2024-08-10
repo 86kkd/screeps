@@ -18,7 +18,7 @@ const config = {
       work: 0.5,
     },
     role: "upgrader",
-    energy_plan: 2000,
+    energy_plan: 3000,
     count: 1,
   },
 
@@ -42,7 +42,7 @@ const config = {
       work: 0.5,
     },
     role: "recycler",
-    energy_plan: 2000,
+    energy_plan: 3500,
     count: 2,
   },
   // transfer: {

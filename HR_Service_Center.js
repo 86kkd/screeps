@@ -71,7 +71,7 @@ class HRSC {
         const room_resources = room.find(FIND_DROPPED_RESOURCES, {
             filter: (source) => {
                 console.log(TAG + "resources rest energy:", source.energy);
-                return (source.energy > 0);
+                return (source.amount > 10);
             },
         });
         const room_tombstones = room.find(FIND_TOMBSTONES, {
@@ -130,7 +130,8 @@ class HRSC {
                 roleUpgrader.run(creep, room_source[0]);
             }
             if (creep.memory.role == "recycler") {
-                creep.say("recycler");
+                creep.say("♵");
+
                 if (room_resources.length) {
                     roleRecycler.run(creep, room_resources[0]);
                 } else if (room_ruins.length) {
