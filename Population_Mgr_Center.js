@@ -1,4 +1,5 @@
 "use strict";
+
 const math = require("math_function");
 
 const TAG = "PopMgr: ";
@@ -115,6 +116,7 @@ class creep_factory {
     // count body_cost
     const body_part = {};
     let total_body_part = 0;
+    let total_cost = 0;
     for (const body_type in config.body_cost_assign) {
       body_part[body_type] = {};
       body_part[body_type].cost = Math.floor(
@@ -124,21 +126,51 @@ class creep_factory {
         body_part[body_type].cost / this.creep_body.body_cost[body_type],
       );
       total_body_part += body_part[body_type].num;
+      total_cost += body_part[body_type].cost;
     }
-    if (total_body_part > 50){
+    // console if energy too huge that body > 50
+    if (total_body_part > 50) {
+      const matric = [];
+      for (const body_type_y in config.body_cost_assign) {
+        const array = [];
+        for (const body_type_x in config.body_cost_assign) {
+          if (body_type_x == body_type_y) {
+            array.push(
+              this.creep_body.body_cost[body_type_x] *
+                (1 - total_cost / body_part[body_type_x].cost),
+            );
+          } else {
+            array.push(this.creep_body.body_cost[body_type_x]);
+          }
+        }
+        console.log(array);
+        matric.push(array);
+      }
 
+      const result = math.gaussElimination(matric);
+      let i;
+      let num_result = 0;
+      for (i = 0; i < result.length; i++) {
+        num_result += result[i];
+      }
+      i = 0;
+      for (const body_type in config.body_cost_assign) {
+        body_part[body_type].num = Math.floor((result[i] / num_result) * 50);
+        i++;
+      }
     }
 
     // assign body
     for (const body_type in config.body_cost_assign) {
       while (
-        --body_part[body_type].num > 0 &&
+        --body_part[body_type].num >= 0 &&
         !this.creep_body.is_off_capacity()
       ) {
         this.creep_body.push(body_type);
-        console.log(TAG + `in assign body while`);
+        // console.log(TAG + `in assign body while`);
       }
     }
+    console.log(TAG + `check assigned body:\n${this.creep_body}`);
 
     // check if all energy planned is assiged
     while (this.creep_body.cost > energy_to_use) {
@@ -171,34 +203,11 @@ class creep_factory {
     const creep_role = config.role;
     const count = config.count;
     this.config_creep_body(config, assign_by_capacity);
-    let array = [];
-    array.push(
-      MOVE,
-      MOVE,
-      MOVE,
-      MOVE,
-      MOVE,
-      MOVE,
-      MOVE,
-      CARRY,
-      CARRY,
-      CARRY,
-      CARRY,
-      CARRY,
-      CARRY,
-      WORK,
-      WORK,
-      WORK,
-      WORK,
-      WORK,
-      WORK,
-      WORK,
-    );
 
     if (get_creeps_cout(creep_role, this.spawn_name) < count) {
       do {
         result = this.spawn.spawnCreep(
-          array,
+          this.creep_body,
           creep_role + number + "_" + this.spawn_name,
           {
             memory: { role: creep_role, mother: this.spawn_name },
