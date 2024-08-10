@@ -1,5 +1,8 @@
 "use strict";
+const math = require("math_function");
+
 const TAG = "PopMgr: ";
+
 const get_creeps_cout = (role, mother) => {
   let num = 0;
 
