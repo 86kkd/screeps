@@ -111,7 +111,6 @@ class creep_factory {
     } else {
       this.energy_capacity = this.energy_available;
     }
-    console.log(TAG + `come in config creep body`);
 
     // count body_cost
     const body_part = {};
@@ -143,7 +142,6 @@ class creep_factory {
             array.push(this.creep_body.body_cost[body_type_x]);
           }
         }
-        console.log(array);
         matric.push(array);
       }
 
@@ -170,18 +168,15 @@ class creep_factory {
         // console.log(TAG + `in assign body while`);
       }
     }
-    console.log(TAG + `check assigned body:\n${this.creep_body}`);
 
     // check if all energy planned is assiged
     while (this.creep_body.cost > energy_to_use) {
       this.creep_body.pop();
     }
-    console.log(TAG + `check if energy used overflow`);
     while (
       this.creep_body.cost < energy_to_use &&
       !this.creep_body.is_off_capacity()
     ) {
-      console.log(TAG + `check if assigned all body: ${this.creep_body}`);
       //   // if the lest energy can afford for MOVE then push ahead
       if ((energy_to_use - this.creep_body.cost) >= 50) {
         this.creep_body.unshift(MOVE);
@@ -194,7 +189,6 @@ class creep_factory {
         break;
       }
     }
-    console.log(TAG + `finish body assign:\n${this.creep_body}`);
   }
 
   create_creep(config, assign_by_capacity = true) {
@@ -215,7 +209,6 @@ class creep_factory {
         );
         console.log(TAG + `spawn result:${result}`);
         console.log(TAG + `creep body:${this.creep_body.length}`);
-        console.log(TAG + `creep body array:${[MOVE, MOVE]}`);
         number++;
       } while (result == ERR_NAME_EXISTS);
     }
