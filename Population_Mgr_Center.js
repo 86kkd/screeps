@@ -26,28 +26,52 @@ class Body extends Array {
       claim: 600,
       tough: 10,
     };
+    this.body = {};
   }
   get_body_cost(body) {
     return this.body_cost[body];
   }
+  is_get_capacity() {
+    return this.length == 50;
+  }
 
   push(...items) {
     let totalCost = 0;
-    for (const item of items) {
-      this.cost += this.body_cost[item];
-      totalCost += this.body_cost[item];
+    if (this.length < 50) {
+      for (const item of items) {
+        this.cost += this.body_cost[item];
+        totalCost += this.body_cost[item];
+        if (this.body[item] == undefined) {
+          this.body[item] = 0;
+        }
+        this.body[item] += 1;
+      }
+      super.push(...items);
+    } else {
+      console.log(
+        TAG + `Error: Body is abready full: this.length=${this.length}`,
+      );
     }
-    super.push(...items);
     return totalCost;
   }
 
   unshift(...items) {
     let totalCost = 0;
-    for (const item of items) {
-      this.cost += this.body_cost[item];
-      totalCost += this.body_cost[item];
+    if (this.length < 50) {
+      for (const item of items) {
+        this.cost += this.body_cost[item];
+        totalCost += this.body_cost[item];
+        if (this.body[item] == undefined) {
+          this.body[item] = 0;
+        }
+        this.body[item] += 1;
+      }
+      super.unshift(...items);
+    } else {
+      console.log(
+        TAG + `Error: Body is abready full: this.length=${this.length}`,
+      );
     }
-    super.unshift(...items);
     return totalCost;
   }
 
@@ -55,10 +79,17 @@ class Body extends Array {
     this.cost -= this.body_cost[super.pop()];
     return this.cost;
   }
-  //
-  // toString() {
-  //   return `${this.join(",")}`;
-  // }
+
+  toString() {
+    let bodyStr = "";
+
+    for (const key in this.body) {
+      bodyStr += `${key}[${this.body[key]}],`;
+    }
+
+    bodyStr = bodyStr.trim().replace(/,$/, "");
+    return `body:${bodyStr}; totalCost:${this.cost}`;
+  }
 }
 
 class creep_factory {
@@ -93,7 +124,10 @@ class creep_factory {
       let body_part_num = Math.floor(
         config.body_cost_assign[body_type] * energy_to_use,
       );
-      while ((body_part_num - this.creep_body.get_body_cost(body_type)) > 0) {
+      while (
+        (body_part_num - this.creep_body.get_body_cost(body_type)) > 0 &&
+        !this.creep_body.is_get_capacity()
+      ) {
         body_part_num -= this.creep_body.push(body_type);
         console.log(TAG + `in assign body while`);
       }
@@ -103,8 +137,11 @@ class creep_factory {
       this.creep_body.pop();
     }
     console.log(TAG + `check if energy used overflow`);
-    while (this.creep_body.cost < energy_to_use) {
-      console.log(TAG + `check if assigned all body:${this.creep_body}`);
+    while (
+      this.creep_body.cost < energy_to_use &&
+      !this.creep_body.is_get_capacity()
+    ) {
+      console.log(TAG + `check if assigned all body: ${this.creep_body}`);
       //   // if the lest energy can afford for MOVE then push ahead
       if ((energy_to_use - this.creep_body.cost) >= 50) {
         this.creep_body.unshift(MOVE);
@@ -117,7 +154,7 @@ class creep_factory {
         break;
       }
     }
-    console.log(TAG + `finish body assign:${this.creep_body}`);
+    console.log(TAG + `finish body assign:\n${this.creep_body}`);
   }
 
   create_creep(config, assign_by_capacity = true) {
