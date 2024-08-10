@@ -192,6 +192,11 @@ class creep_factory {
   }
 
   create_creep(config, assign_by_capacity = true) {
+    this.spawn = Game.spawns[this.spawn_name];
+    this.room = this.spawn.room;
+    this.ctl_level = this.room.controller.level;
+    this.energy_available = this.room.energyAvailable;
+    this.energy_capacity = this.room.energyCapacityAvailable;
     let result;
     let number = 0;
     const creep_role = config.role;
@@ -200,7 +205,11 @@ class creep_factory {
 
     if (get_creeps_cout(creep_role, this.spawn_name) < count) {
       if (this.creep_body.cost > this.energy_available) {
-        console.log(TAG + `energy is not enouth for creep:${this.creep_body}`);
+        console.log(
+          TAG +
+            `energy is not enouth for creep:\n${this.creep_body}\navaivable energy:${this.energy_available}`,
+        );
+        return;
       }
       do {
         result = this.spawn.spawnCreep(
@@ -211,7 +220,7 @@ class creep_factory {
           },
         );
         console.log(TAG + `spawn result:${result}`);
-        console.log(TAG + `creep body:${this.creep_body.length}`);
+        console.log(TAG + `creep body:${this.creep_body}`);
         number++;
       } while (result == ERR_NAME_EXISTS);
     }
