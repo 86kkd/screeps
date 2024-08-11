@@ -1,9 +1,9 @@
 const TAG = "MAIN :";
-const { HRSC, CreateHRSC } = require("HR_Service_Center");
+const { HRSC } = require("HR_Service_Center");
 const { creep_factory } = require("Population_Mgr_Center");
 const creep_config = require("config_creeps");
 
-module.exports.loop = function () {
+module.exports.loop = function() {
     const startCpu = Game.cpu.getUsed();
 
     const spawn = "Spawn1";
