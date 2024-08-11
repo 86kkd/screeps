@@ -1,4 +1,4 @@
-const TAG = "HARVESTER :";
+// const TAG = "HARVESTER :";
 const roleHarvester = {
     run_to_another_room: function(room_name) {
         room = Game.room[room_name];
