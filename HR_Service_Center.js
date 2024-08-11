@@ -137,6 +137,10 @@ class HRSC {
                     roleUpgrader.run(creep, room_source[0]);
                 }
             }
+
+            if (creep.ticksToLive == 0) {
+                delete Memory.creeps[name];
+            }
         }
     }
 }
