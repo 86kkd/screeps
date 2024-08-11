@@ -32,6 +32,7 @@ class Body extends Array {
     };
     this.body = {};
   }
+  /**@param {String} spawn */
   get_body_cost(body) {
     return this.body_cost[body];
   }
@@ -91,7 +92,7 @@ class creep_factory {
     }
     return creep_factory.instance;
   }
-
+  /**@param {String} spawn */
   constructor(spawn) {
     this.spawn_name = spawn;
     this.spawn = Game.spawns[this.spawn_name];
@@ -115,7 +116,7 @@ class creep_factory {
         energy_to_use = this.energy_capacity;
         console.log(
           TAG +
-            `Wornging: erengy_plan:${config.energy_plan} is to huge using room_energy_capacity:${this.energy_capacity} `,
+          `Wornging: erengy_plan:${config.energy_plan} is to huge using room_energy_capacity:${this.energy_capacity} `,
         );
       } else {
         energy_to_use = config.energy_plan;
@@ -125,7 +126,7 @@ class creep_factory {
     } else {
       console.log(
         TAG +
-          `Error: config_plan:{${config.energy_plan}} is not in [Number ,'capacity','available']`,
+        `Error: config_plan:{${config.energy_plan}} is not in [Number ,'capacity','available']`,
       );
       return;
     }
@@ -154,7 +155,7 @@ class creep_factory {
           if (body_type_x == body_type_y) {
             array.push(
               this.creep_body.body_cost[body_type_x] *
-                (1 - total_cost / body_part[body_type_x].cost),
+              (1 - total_cost / body_part[body_type_x].cost),
             );
           } else {
             array.push(this.creep_body.body_cost[body_type_x]);
@@ -225,7 +226,7 @@ class creep_factory {
       if (this.creep_body.cost > this.energy_available) {
         console.log(
           TAG +
-            `energy is not enouth for creep:\n${this.creep_body}\navaivable energy:${this.energy_available}`,
+          `energy is not enouth for creep:\n${this.creep_body}\navaivable energy:${this.energy_available}`,
         );
         return;
       }
