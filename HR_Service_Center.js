@@ -40,15 +40,6 @@ class HRSC {
                 return (source.energy > 0);
             },
         });
-        // const room_source = room.find(FIND_STRUCTURES, {
-        //     filter: (structure) => {
-        //         return ((
-        //             structure.structureType == STRUCTURE_CONTAINER ||
-        //             structure.structureType == STRUCTURE_STORAGE
-        //         ) &&
-        //             structure.store[RESOURCE_ENERGY] > 0);
-        //     },
-        // });
 
         const tower = room.find(FIND_STRUCTURES, {
             filter: (structure) => {
@@ -61,7 +52,7 @@ class HRSC {
                 structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) ||
                 (structure.structureType == STRUCTURE_TOWER &&
                     structure.store.getFreeCapacity(RESOURCE_ENERGY) >
-                        200);
+                    200);
         };
         const global_store_struct = room.find(FIND_STRUCTURES, {
             filter: (structure) => {
@@ -78,8 +69,8 @@ class HRSC {
             filter: (structure) => {
                 console.log(
                     TAG +
-                        "tombstones rest energy:" +
-                        structure.store[RESOURCE_ENERGY],
+                    "tombstones rest energy:" +
+                    structure.store[RESOURCE_ENERGY],
                 );
                 return structure.store[RESOURCE_ENERGY] > 0;
             },
@@ -88,8 +79,8 @@ class HRSC {
             filter: (structure) => {
                 console.log(
                     TAG +
-                        "ruins rest energey:" +
-                        structure.store[RESOURCE_ENERGY],
+                    "ruins rest energey:" +
+                    structure.store[RESOURCE_ENERGY],
                 );
                 return structure.store[RESOURCE_ENERGY] > 0;
             },
@@ -98,13 +89,6 @@ class HRSC {
         console.log(TAG + "Game controller level:" + ctl_level);
         console.log(TAG + spawn_name + " energy_availble:" + energy_available);
         console.log(TAG + spawn_name + " energy_max:" + energy_capacity);
-
-        // for (let i = 0; i < room_source.length; i++) {
-        //     const id = room_source[i].id;
-        //     const Source = Game.getObjectById(id);
-        //     const last_energy = Source.energy;
-        //     console.log("source_" + id + " energy:" + last_energy);
-        // }
 
         for (let i = 0; i < tower.length; i++) {
             const tower_id = tower[i].id;
