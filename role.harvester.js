@@ -1,6 +1,6 @@
 const TAG = "HARVESTER :";
 const roleHarvester = {
-    run_to_another_room: function (room_name) {
+    run_to_another_room: function(room_name) {
         room = Game.room[room_name];
         const exitDir = creep.room.findExitTo(room);
         const exit = creep.pos.findClosestByRange(exitDir);
@@ -8,7 +8,7 @@ const roleHarvester = {
     },
 
     /** @param {Creep} creep **/
-    run: function (creep, source_targets, store_filter) {
+    run: function(creep, source_targets, store_filter) {
         // act as a harvester
         // source_targets = "297e3b8710cc0c9";
         if (creep.store[RESOURCE_ENERGY] == 0 && creep.memory.working) {
@@ -38,6 +38,7 @@ const roleHarvester = {
                     creep.transfer(targets, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE
                 ) {
                     creep.say("🌾");
+
                     creep.moveTo(targets, {
                         visualizePathStyle: { stroke: "#ffffff" },
                     });
