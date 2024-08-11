@@ -95,6 +95,20 @@ class HRSC {
             roleTower.run(tower_id);
         }
 
+        for (const creep in Memory.creeps) {
+            if (Object.keys(Game.creeps).includes(creep)) {
+                console.log(
+                    TAG + `Game creeps keys:${creep}`,
+                );
+            } else {
+                delete Memory.creeps[creep];
+                console.log(
+                    TAG +
+                    `Info delete unused Mesory(${creep})`,
+                );
+            }
+        }
+
         for (const name in Game.creeps) {
             const creep = Game.creeps[name];
             // console.log(TAG + "creep fatigue:" + creep.fatigue);
