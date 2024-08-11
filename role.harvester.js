@@ -7,7 +7,11 @@ const roleHarvester = {
         creep.moveTo(exit);
     },
 
-    /** @param {Creep} creep **/
+    /**
+     * @param {Creep} creep
+     * @param {(Source|Structure)} source_targets
+     * @param {Function} store_filter
+     * **/
     run: function(creep, source_targets, store_filter) {
         // act as a harvester
         // source_targets = "297e3b8710cc0c9";
