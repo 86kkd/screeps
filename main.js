@@ -7,7 +7,6 @@ module.exports.loop = function() {
     const startCpu = Game.cpu.getUsed();
 
     const spawn = "Spawn1";
-    Game.spawns.Spawn1.createCreep;
     const population_mgr = creep_factory.get_instance(spawn);
     const HR = HRSC.get_instance();
     for (const config in creep_config) {
