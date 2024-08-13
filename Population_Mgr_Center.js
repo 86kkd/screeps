@@ -4,6 +4,10 @@ const math = require("math_function");
 
 const TAG = "PopMgr: ";
 
+/**
+ * @param {String} role
+ * @param {String} mother
+ */
 const get_creeps_cout = (role, mother) => {
   let num = 0;
 
@@ -32,7 +36,9 @@ class Body extends Array {
     };
     this.body = {};
   }
-  /**@param {String} spawn */
+  /**
+   * @param {String} spawn
+   */
   get_body_cost(body) {
     return this.body_cost[body];
   }
@@ -92,7 +98,9 @@ class creep_factory {
     }
     return creep_factory.instance;
   }
-  /**@param {String} spawn */
+  /**
+   * @param {String} spawn
+   */
   constructor(spawn) {
     this.spawn_name = spawn;
     this.spawn = Game.spawns[this.spawn_name];
