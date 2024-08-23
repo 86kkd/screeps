@@ -1,11 +1,20 @@
-// const TAG = "TRANSFER";
+const TAG = "TRANSFER: ";
 const roleTransfer = {
   /**
    * @param {Creep} creep
    * @param {(StructureStorage|StructureContainer)} source_target */
   run: function(creep, source_target, trans_target) {
-    if (creep.store.getFreeCapacity() > 0) {
-      if (creep.withdraw(source_target) == ERR_NOT_IN_RANGE) {
+    if (creep.memory.working && creep.store[RESOURCE_ENERGY] == 0) {
+      creep.memory.working = false;
+    }
+    if (!creep.memory.working && creep.store.getFreeCapacity() == 0) {
+      creep.memory.working = true;
+    }
+    console.log(TAG + `roleTransfer`);
+    console.log(TAG + `${trans_target}`);
+    if (!creep.memory.working) {
+      console.log(TAG + `${creep.withdraw(source_target, RESOURCE_ENERGY)}`);
+      if (creep.withdraw(source_target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         creep.moveTo(source_target, {
           visualizePathStyle: { stroke: "#ffa0ff" },
         });
@@ -16,6 +25,10 @@ const roleTransfer = {
       creep.moveTo(trans_target), {
         visualizePathStyle: { stroke: "#ffa0ff" },
       };
+    } else {
+      console.log(TAG + `unexpected error`);
     }
   },
 };
+
+module.exports = roleTransfer;
