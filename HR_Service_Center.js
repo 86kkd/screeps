@@ -4,6 +4,7 @@ const roleUpgrader = require("role.upgrader");
 const roleBuilder = require("role.builder");
 const roleTower = require("role.tower");
 const roleRecycler = require("role.recycler");
+const roleTransfer = require("role.transfer");
 
 const TAG = "HR_SERVICE_CENTER :";
 class HRSC {
@@ -18,8 +19,6 @@ class HRSC {
      * @function constructer initialize the creep_type
      */
     constructor() {
-        // this.source_id = ["26f20772347f879", "71ac0772347ffe6"];
-        this.creep_type = ["harvester", "upgrader", "builder", "recycler"];
     }
 
     /**
@@ -111,10 +110,6 @@ class HRSC {
 
         for (const name in Game.creeps) {
             const creep = Game.creeps[name];
-            // console.log(TAG + "creep fatigue:" + creep.fatigue);
-            if (!this.creep_type.includes(creep.memory.role)) {
-                console.log(TAG + creep.memory.role + " is not in creep_type");
-            }
             if (creep.memory.role == "harvester") {
                 if (global_store_struct.length) {
                     roleHarvester.run(creep, room_source[0], store_filter);
