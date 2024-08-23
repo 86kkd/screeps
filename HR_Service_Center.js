@@ -151,6 +151,24 @@ class HRSC {
                     roleUpgrader.run(creep, room_source[0]);
                 }
             }
+            if (creep.memory.role == "transfer") {
+                const source_t = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    filter: (constructor) => {
+                        return constructor.structureType == STRUCTURE_STORAGE ||
+                            constructor.structureType == STRUCTURE_CONTAINER;
+                    },
+                });
+                const target_t = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    filter: (constructor) => {
+                        return (constructor.structureType ==
+                            STRUCTURE_EXTENSION ||
+                            constructor.structureType == STRUCTURE_NUKER) &&
+                            constructor.store.getFreeCapacity(RESOURCE_ENERGY) >
+                            0;
+                    },
+                });
+                roleTransfer.run(creep, source_t, target_t);
+            }
 
             if (creep.ticksToLive == 0) {
                 delete Memory.creeps[name];
