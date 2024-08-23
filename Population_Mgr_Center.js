@@ -228,9 +228,9 @@ class creep_factory {
     let number = 0;
     const creep_role = config.role;
     const count = config.count;
-    this.config_creep_body(config);
 
     if (get_creeps_cout(creep_role, this.spawn_name) < count) {
+      this.config_creep_body(config);
       if (this.creep_body.cost > this.energy_available) {
         console.log(
           TAG +
