@@ -1,6 +1,5 @@
 const config = {
   harvester: {
-    body: [MOVE, CARRY, WORK],
     body_cost_assign: {
       move: 0.25,
       carry: 0.25,
@@ -11,7 +10,6 @@ const config = {
     count: 0,
   },
   upgrader: {
-    body: [MOVE, CARRY, WORK],
     body_cost_assign: {
       move: 0.25,
       carry: 0.25,
@@ -23,7 +21,6 @@ const config = {
   },
 
   builder: {
-    body: [MOVE, CARRY, WORK],
     body_cost_assign: {
       move: 0.25,
       carry: 0.25,
@@ -35,7 +32,6 @@ const config = {
   },
 
   recycler: {
-    body: [MOVE, CARRY, WORK],
     body_cost_assign: {
       move: 0.25,
       carry: 0.25,
@@ -45,15 +41,15 @@ const config = {
     energy_plan: 3500,
     count: 2,
   },
-  // transfer: {
-  //   body: [MOVE, CARRY, WORK],
-  //   body_cost_assign: {
-  //     move: 0.25,
-  //     carry: 0.25,
-  //     work: 0.5,
-  //   },
-  //   role: "transfer",
-  //   count: 2,
-  // },
+
+  transfer: {
+    body_cost_assign: {
+      move: 0.3,
+      carry: 0.6,
+    },
+    role: "transfer",
+    energy_plan: 3000,
+    count: 1,
+  },
 };
 module.exports = config;
