@@ -238,6 +238,14 @@ class creep_factory {
         );
         return;
       }
+      if (
+        Object.keys(this.creep_body.body).some((key) =>
+          this.creep_body.body[key] == 50
+        )
+      ) {
+        console.log(TAG + `assign creep_body error`);
+        return;
+      }
       do {
         result = this.spawn.spawnCreep(
           this.creep_body,
