@@ -26,9 +26,6 @@ function gaussElimination(matrix) {
     for (let j = i + 1; j < n; j++) {
       sum += matrix[i][j] * ratios[j];
     }
-    // for (let k = i + 1; k < n; k++) {
-    //   ratios[i] -= matrix[i][k] * ratios[k];
-    // }
     ratios[i] = -sum / matrix[i][i];
   }
 
