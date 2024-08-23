@@ -195,7 +195,13 @@ class creep_factory {
         // console.log(TAG + `in assign body while`);
       }
     }
-
+    if (Object.keys(this.creep_body.body) == 0) {
+      console.log(
+        TAG +
+        `There is something errer\n${this.creep_body}\ncreep_role:${config.role}`,
+      );
+      this.creep_body;
+    }
     // check if all energy planned is assiged
     while (this.creep_body.cost > energy_to_use) {
       this.creep_body.pop();
