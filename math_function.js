@@ -19,22 +19,17 @@ function gaussElimination(matrix) {
     }
   }
 
-  const ratios = new Array(n).fill(1);
-  for (let i = n - 1; i >= 0; i--) {
+  const ratios = new Array(n).fill(0);
+  ratios[n - 1] = 1;
+  for (let i = n - 2; i >= 0; i--) {
     let sum = 0;
     for (let j = i + 1; j < n; j++) {
       sum += matrix[i][j] * ratios[j];
     }
-    ratios[i] = 1;
-    for (let k = i + 1; k < n; k++) {
-      ratios[i] -= matrix[i][k] * ratios[k];
-    }
-    ratios[i] /= matrix[i][i];
-  }
-
-  const baseRatio = ratios[0];
-  for (let i = 0; i < n; i++) {
-    ratios[i] /= baseRatio;
+    // for (let k = i + 1; k < n; k++) {
+    //   ratios[i] -= matrix[i][k] * ratios[k];
+    // }
+    ratios[i] = -sum / matrix[i][i];
   }
 
   return ratios;
