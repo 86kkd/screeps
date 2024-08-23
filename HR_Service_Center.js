@@ -158,7 +158,7 @@ class HRSC {
                             constructor.structureType == STRUCTURE_CONTAINER;
                     },
                 });
-                const target_t = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                const target_t = creep.room.find(FIND_STRUCTURES, {
                     filter: (constructor) => {
                         return (constructor.structureType ==
                             STRUCTURE_EXTENSION ||
@@ -167,7 +167,7 @@ class HRSC {
                             0;
                     },
                 });
-                roleTransfer.run(creep, source_t, target_t);
+                roleTransfer.run(creep, source_t, target_t[0]);
             }
 
             if (creep.ticksToLive == 0) {
