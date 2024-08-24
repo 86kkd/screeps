@@ -149,8 +149,10 @@ class HRSC {
             if (creep.memory.role == "transfer") {
                 const source_t = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                     filter: (constructor) => {
-                        return constructor.structureType == STRUCTURE_STORAGE ||
-                            constructor.structureType == STRUCTURE_CONTAINER;
+                        return (constructor.structureType ==
+                            STRUCTURE_STORAGE ||
+                            constructor.structureType == STRUCTURE_CONTAINER) &&
+                            constructor.store[RESOURCE_ENERGY] > 0;
                     },
                 });
                 const target_t = creep.room.find(FIND_STRUCTURES, {
