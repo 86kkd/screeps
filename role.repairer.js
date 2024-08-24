@@ -1,6 +1,6 @@
 const roleRepairer = {
 	/** @param {Creep} creep **/
-	run: function (creep) {
+	run: function(creep) {
 		if (creep.memory.working && creep.store[RESOURCE_ENERGY] == 0) {
 			creep.memory.working = false;
 		}
@@ -8,21 +8,16 @@ const roleRepairer = {
 			creep.memory.working = true;
 		}
 		if (creep.memory.working) {
-			let targets = creep.room.find(FIND_STRUCTURES, {
+			const targets = creep.room.find(FIND_STRUCTURES, {
 				filter: (object) => object.hits < object.hitsMax,
 			});
 			if (targets.length) {
 				creep.say("repair");
-				targets = creep.room.find(FIND_STRUCTURES, {
-					filter: (object) => object.hits < object.hitsMax,
-				});
-				// targets.sort((a,b) => a.hits - b.hits);  //find lowest hit wall
-				if (targets.length > 0) {
-					if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-						creep.moveTo(targets[0], {
-							visualizePathStyle: { stroke: "#ffffff" },
-						});
-					}
+				targets.sort((a, b) => a.hits - b.hits); //find lowest hit wall
+				if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
+					creep.moveTo(targets[0], {
+						visualizePathStyle: { stroke: "#ffffff" },
+					});
 				}
 			}
 		} else {
