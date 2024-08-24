@@ -8,6 +8,7 @@ const config = {
     role: "harvester",
     energy_plan: 2000,
     count: 0,
+    memory: {},
   },
   upgrader: {
     body_cost_assign: {
@@ -18,6 +19,7 @@ const config = {
     role: "upgrader",
     energy_plan: 3000,
     count: 1,
+    memory: {},
   },
 
   builder: {
@@ -29,6 +31,7 @@ const config = {
     role: "builder",
     energy_plan: 2000,
     count: 0,
+    memory: {},
   },
 
   recycler: {
@@ -40,6 +43,7 @@ const config = {
     role: "recycler",
     energy_plan: 3500,
     count: 4,
+    memory: {},
   },
 
   transfer: {
@@ -49,7 +53,17 @@ const config = {
     },
     role: "transfer",
     energy_plan: 3000,
+    count: 0,
+    memory: {},
+  },
+  remote_harvester: {
+    body_cost_assign: {
+      work: 1,
+    },
+    role: "remote_harvester",
+    energy_plan: 1000,
     count: 1,
+    memory: { source_id: "9263077296e02bb", room: "W7N3" },
   },
 };
 module.exports = config;
