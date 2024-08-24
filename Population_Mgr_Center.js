@@ -232,15 +232,15 @@ class creep_factory {
     this.energy_capacity = this.room.energyCapacityAvailable;
     let result;
     let number = 0;
-    const creep_role = config.role;
     const count = config.count;
 
-    if (get_creeps_cout(creep_role, this.spawn_name) < count) {
+    if (get_creeps_cout(config.role, this.spawn_name) < count) {
+      // config creep body
       this.config_creep_body(config);
       if (this.creep_body.cost > this.energy_available) {
         console.log(
           TAG +
-            `energy is not enouth for creep:\n${this.creep_body}\navaivable energy:${this.energy_available}`,
+          `energy is not enouth for creep:\n${this.creep_body}\navaivable energy:${this.energy_available}`,
         );
         return;
       }
@@ -252,13 +252,18 @@ class creep_factory {
         console.log(TAG + `assign creep_body error`);
         return;
       }
+
+      // config creep_memory
+      const creep_memory = config.memory;
+      creep_memory.role = config.role;
+      creep_memory.mother = this.spawn_name;
+
       do {
+        const creep_name = config.role + number + "_" + this.spawn_name;
         result = this.spawn.spawnCreep(
           this.creep_body,
-          creep_role + number + "_" + this.spawn_name,
-          {
-            memory: { role: creep_role, mother: this.spawn_name },
-          },
+          creep_name,
+          { memory: creep_memory },
         );
         console.log(TAG + `spawn result:${result}`);
         console.log(TAG + `creep body:${this.creep_body}`);
