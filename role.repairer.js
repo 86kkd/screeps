@@ -29,4 +29,4 @@ const roleRepairer = {
 	},
 };
 
-model.exports = roleRepairer;
+module.exports = roleRepairer;
