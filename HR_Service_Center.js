@@ -6,6 +6,7 @@ const roleTower = require("role.tower");
 const roleRecycler = require("role.recycler");
 const roleTransfer = require("role.transfer");
 const roleRepairer = require("role.repairer");
+const roleRemoteTranfer = require("role.remoteharvester");
 
 const TAG = "HR_SERVICE_CENTER :";
 class HRSC {
@@ -160,7 +161,7 @@ class HRSC {
             }
 
             if (creep.memory.role == "remote_harvester") {
-                roleRepairer.run(creep);
+                roleRemoteTranfer.run(creep);
             }
 
             if (creep.ticksToLive == 0) {
