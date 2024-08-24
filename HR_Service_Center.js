@@ -52,7 +52,7 @@ class HRSC {
                 structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) ||
                 (structure.structureType == STRUCTURE_TOWER &&
                     structure.store.getFreeCapacity(RESOURCE_ENERGY) >
-                    200);
+                        200);
         };
         const global_store_struct = room.find(FIND_STRUCTURES, {
             filter: (structure) => {
@@ -69,19 +69,14 @@ class HRSC {
             filter: (structure) => {
                 console.log(
                     TAG +
-                    "tombstones rest energy:" +
-                    structure.store[RESOURCE_ENERGY],
+                        "tombstones rest energy:" +
+                        structure.store[RESOURCE_ENERGY],
                 );
                 return structure.store[RESOURCE_ENERGY] > 0;
             },
         });
         const room_ruins = room.find(FIND_RUINS, {
             filter: (structure) => {
-                console.log(
-                    TAG +
-                    "ruins rest energey:" +
-                    structure.store[RESOURCE_ENERGY],
-                );
                 return structure.store[RESOURCE_ENERGY] > 0;
             },
         });
@@ -96,15 +91,11 @@ class HRSC {
         }
 
         for (const creep in Memory.creeps) {
-            if (Object.keys(Game.creeps).includes(creep)) {
-                console.log(
-                    TAG + `Game creeps keys:${creep}`,
-                );
-            } else {
+            if (!Object.keys(Game.creeps).includes(creep)) {
                 delete Memory.creeps[creep];
                 console.log(
                     TAG +
-                    `Info delete unused Mesory(${creep})`,
+                        `Info delete unused Mesory(${creep})`,
                 );
             }
         }
@@ -151,7 +142,7 @@ class HRSC {
                 const source_t = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                     filter: (constructor) => {
                         return (constructor.structureType ==
-                            STRUCTURE_STORAGE ||
+                                STRUCTURE_STORAGE ||
                             constructor.structureType == STRUCTURE_CONTAINER) &&
                             constructor.store[RESOURCE_ENERGY] > 0;
                     },
@@ -159,10 +150,10 @@ class HRSC {
                 const target_t = creep.room.find(FIND_STRUCTURES, {
                     filter: (constructor) => {
                         return (constructor.structureType ==
-                            STRUCTURE_EXTENSION ||
+                                STRUCTURE_EXTENSION ||
                             constructor.structureType == STRUCTURE_NUKER) &&
                             constructor.store.getFreeCapacity(RESOURCE_ENERGY) >
-                            0;
+                                0;
                     },
                 });
                 roleTransfer.run(creep, source_t, target_t[0]);
