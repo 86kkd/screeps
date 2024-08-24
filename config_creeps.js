@@ -39,7 +39,7 @@ const config = {
     },
     role: "recycler",
     energy_plan: 3500,
-    count: 2,
+    count: 4,
   },
 
   transfer: {
