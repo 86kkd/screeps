@@ -1,6 +1,6 @@
 const TAG = "RECYCLER :";
 const roleRecycler = {
-    run_to_another_room: function(room_name) {
+    run_to_another_room: function (room_name) {
         room = Game.room[room_name];
         const exitDir = creep.room.findExitTo(room);
         const exit = creep.pos.findClosestByRange(exitDir);
@@ -8,10 +8,13 @@ const roleRecycler = {
     },
 
     /** @param {Creep} creep **/
-    run: function(creep, source_targets) {
+    run: function (creep, source_targets) {
         // act as a harvester
         if (creep.store[RESOURCE_ENERGY] == 0 && creep.memory.working) {
             creep.memory.working = false;
+        }
+        if (!creep.memory.working && creep.store.getFreeCapacity() == 0) {
+            creep.memory.working = true;
         }
 
         creep.say("♻️");
@@ -28,21 +31,22 @@ const roleRecycler = {
         };
 
         if (
-            creep.store.getFreeCapacity() == creep.store.getCapacity() ||
-            if_can_carry()
+            !creep.memory.working &&
+            (creep.store.getFreeCapacity() == creep.store.getCapacity() ||
+                if_can_carry())
         ) {
             console.log(TAG + "recycler droped resources:" + source_targets);
             console.log(
                 TAG +
-                "resources in range:" +
-                (creep.withdraw(source_targets, RESOURCE_ENERGY) + " or " +
-                    (creep.pickup(source_targets, RESOURCE_ENERGY))),
+                    "resources in range:" +
+                    (creep.withdraw(source_targets, RESOURCE_ENERGY) + " or " +
+                        (creep.pickup(source_targets, RESOURCE_ENERGY))),
             );
             if (
                 creep.withdraw(source_targets, RESOURCE_ENERGY) ==
-                ERR_NOT_IN_RANGE ||
+                    ERR_NOT_IN_RANGE ||
                 creep.pickup(source_targets, RESOURCE_ENERGY) ==
-                ERR_NOT_IN_RANGE
+                    ERR_NOT_IN_RANGE
             ) {
                 creep.moveTo(source_targets, {
                     visualizePathStyle: { stroke: "#ffaa00" },
@@ -60,7 +64,7 @@ const roleRecycler = {
                         structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) ||
                         (structure.structureType == STRUCTURE_TOWER &&
                             structure.store.getFreeCapacity(RESOURCE_ENERGY) >
-                            200);
+                                200);
                 },
             });
             if (targets) {
