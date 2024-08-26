@@ -27,12 +27,25 @@ const roleBuilder = {
         }
       }
     } else {
-      if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+      const resources = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+        filter: (structure) => {
+          return ((
+            structure.structureType == STRUCTURE_CONTAINER ||
+            structure.structureType == STRUCTURE_STORAGE
+          ) &&
+            structure.store[RESOURCE_ENERGY] > 0);
+        },
+      });
+      if (resources) {
+        console.log(TAG + creep.withdraw(resources, RESOURCE_ENERGY));
+        if (creep.withdraw(resources, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+          creep.moveTo(resources);
+        }
+      } else if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
         creep.moveTo(source, { visualizePathStyle: { stroke: "#ffaa00" } });
-      }
+      } else console.log(TAG + "there is something error");
     }
   },
 };
-
 // export default roleBuilder;
 module.exports = roleBuilder;
