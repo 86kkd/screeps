@@ -7,6 +7,7 @@ const roleRecycler = require("role.recycler");
 const roleTransfer = require("role.transfer");
 const roleRepairer = require("role.repairer");
 const roleRemoteTranfer = require("role.remoteharvester");
+const rolePuller = require("role.puller");
 
 const TAG = "HR_SERVICE_CENTER :";
 class HRSC {
@@ -42,11 +43,6 @@ class HRSC {
             },
         });
 
-        const tower = room.find(FIND_STRUCTURES, {
-            filter: (structure) => {
-                return (structure.structureType == STRUCTURE_TOWER);
-            },
-        });
         const store_filter = (structure) => {
             return ((structure.structureType == STRUCTURE_EXTENSION ||
                 structure.structureType == STRUCTURE_SPAWN) &&
@@ -60,31 +56,16 @@ class HRSC {
                 return store_filter(structure);
             },
         });
-        const room_resources = room.find(FIND_DROPPED_RESOURCES, {
-            filter: (source) => {
-                console.log(TAG + "resources rest energy:", source.energy);
-                return (source.amount > 10);
-            },
-        });
-        const room_tombstones = room.find(FIND_TOMBSTONES, {
-            filter: (structure) => {
-                console.log(
-                    TAG +
-                    "tombstones rest energy:" +
-                    structure.store[RESOURCE_ENERGY],
-                );
-                return structure.store[RESOURCE_ENERGY] > 0;
-            },
-        });
-        const room_ruins = room.find(FIND_RUINS, {
-            filter: (structure) => {
-                return structure.store[RESOURCE_ENERGY] > 0;
-            },
-        });
 
         console.log(TAG + "Game controller level:" + ctl_level);
         console.log(TAG + spawn_name + " energy_availble:" + energy_available);
         console.log(TAG + spawn_name + " energy_max:" + energy_capacity);
+
+        const tower = room.find(FIND_STRUCTURES, {
+            filter: (structure) => {
+                return (structure.structureType == STRUCTURE_TOWER);
+            },
+        });
 
         for (let i = 0; i < tower.length; i++) {
             const tower_id = tower[i].id;
@@ -117,6 +98,30 @@ class HRSC {
             }
             if (creep.memory.role == "recycler") {
                 creep.say("♵");
+                const room_resources = room.find(FIND_DROPPED_RESOURCES, {
+                    filter: (source) => {
+                        console.log(
+                            TAG + "resources rest energy:",
+                            source.energy,
+                        );
+                        return (source.amount > 10);
+                    },
+                });
+                const room_tombstones = room.find(FIND_TOMBSTONES, {
+                    filter: (structure) => {
+                        console.log(
+                            TAG +
+                            "tombstones rest energy:" +
+                            structure.store[RESOURCE_ENERGY],
+                        );
+                        return structure.store[RESOURCE_ENERGY] > 0;
+                    },
+                });
+                const room_ruins = room.find(FIND_RUINS, {
+                    filter: (structure) => {
+                        return structure.store[RESOURCE_ENERGY] > 0;
+                    },
+                });
 
                 if (room_resources.length) {
                     roleRecycler.run(creep, room_resources[0]);
@@ -162,6 +167,9 @@ class HRSC {
 
             if (creep.memory.role == "remote_harvester") {
                 roleRemoteTranfer.run(creep);
+            }
+            if (creep.memory.role == "puller") {
+                rolePuller.run(creep);
             }
 
             if (creep.ticksToLive == 0) {
