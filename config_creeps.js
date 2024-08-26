@@ -63,7 +63,16 @@ const config = {
     role: "remote_harvester",
     energy_plan: 1000,
     count: 1,
-    memory: { source_id: "9263077296e02bb", room: "W7N3" },
+    memory: { destinationId: "9263077296e02bb", room: "W7N3" },
+  },
+  puller: {
+    body_cost_assign: {
+      move: 1,
+    },
+    role: "puller",
+    energy_plan: 500,
+    count: 1,
+    memory: {},
   },
 };
 module.exports = config;
