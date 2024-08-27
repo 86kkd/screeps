@@ -49,7 +49,7 @@ class HRSC {
                 structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) ||
                 (structure.structureType == STRUCTURE_TOWER &&
                     structure.store.getFreeCapacity(RESOURCE_ENERGY) >
-                    200);
+                        200);
         };
         const global_store_struct = room.find(FIND_STRUCTURES, {
             filter: (structure) => {
@@ -77,7 +77,7 @@ class HRSC {
                 delete Memory.creeps[creep];
                 console.log(
                     TAG +
-                    `Info delete unused Mesory(${creep})`,
+                        `Info delete unused Mesory(${creep})`,
                 );
             }
         }
@@ -100,20 +100,11 @@ class HRSC {
                 creep.say("♵");
                 const room_resources = room.find(FIND_DROPPED_RESOURCES, {
                     filter: (source) => {
-                        console.log(
-                            TAG + "resources rest energy:",
-                            source.energy,
-                        );
                         return (source.amount > 10);
                     },
                 });
                 const room_tombstones = room.find(FIND_TOMBSTONES, {
                     filter: (structure) => {
-                        console.log(
-                            TAG +
-                            "tombstones rest energy:" +
-                            structure.store[RESOURCE_ENERGY],
-                        );
                         return structure.store[RESOURCE_ENERGY] > 0;
                     },
                 });
@@ -145,27 +136,86 @@ class HRSC {
                 }
             }
             if (creep.memory.role == "transfer") {
-                const source_t = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                const source_t_unsort = creep.room.find(FIND_STRUCTURES, {
                     filter: (constructor) => {
-                        return (constructor.structureType ==
-                            STRUCTURE_STORAGE ||
-                            constructor.structureType == STRUCTURE_CONTAINER) &&
+                        return (
+                            constructor.structureType == STRUCTURE_CONTAINER
+                        ) &&
                             constructor.store[RESOURCE_ENERGY] > 0;
                     },
                 });
-                const target_t = creep.room.find(FIND_STRUCTURES, {
+                source_t_unsort.sort((a, b) =>
+                    a[RESOURCE_ENERGY] > b[RESOURCE_ENERGY]
+                );
+                let source_t;
+                if (source_t_unsort.length) {
+                    source_t = source_t_unsort[0];
+                } else if (
+                    creep.room.find(FIND_STRUCTURES, {
+                        filter: (constructor) => {
+                            return (constructor.structureType ==
+                                    STRUCTURE_SPAWN ||
+                                constructor.structureType ==
+                                    STRUCTURE_EXTENSION) &&
+                                constructor.store.getFreeCapacity(
+                                        RESOURCE_ENERGY,
+                                    ) > 0;
+                        },
+                    }).length
+                ) {
+                    source_t = creep.room.find(FIND_STRUCTURES, {
+                        filter: (constructor) => {
+                            return constructor.structureType ==
+                                STRUCTURE_STORAGE;
+                        },
+                    })[0];
+                }
+
+                console.log(TAG, "source_t:", source_t);
+                const target_t = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                     filter: (constructor) => {
                         return (constructor.structureType ==
-                            STRUCTURE_EXTENSION ||
-                            constructor.structureType == STRUCTURE_NUKER) &&
+                                STRUCTURE_EXTENSION ||
+                            constructor.structureType == STRUCTURE_SPAWN ||
+                            constructor.structureType == STRUCTURE_NUKER ||
+                            constructor.structureType == STRUCTURE_TOWER ||
+                            constructor.structureType == STRUCTURE_STORAGE) &&
                             constructor.store.getFreeCapacity(RESOURCE_ENERGY) >
-                            0;
+                                0;
                     },
                 });
-                roleTransfer.run(creep, source_t, target_t[0]);
+                if (
+                    target_t.structureType != STRUCTURE_SPAWN ||
+                    target_t.structureType != STRUCTURE_EXTENSION
+                ) {
+                    const target_t_important = creep.pos.findClosestByPath(
+                        FIND_STRUCTURES,
+                        {
+                            filter: (constructor) => {
+                                return (constructor.structureType ==
+                                        STRUCTURE_EXTENSION ||
+                                    constructor.structureType ==
+                                        STRUCTURE_SPAWN) &&
+                                    constructor.store.getFreeCapacity(
+                                            RESOURCE_ENERGY,
+                                        ) >
+                                        0;
+                            },
+                        },
+                    );
+                    if (target_t_important) {
+                        console.log(
+                            TAG + target_t_important,
+                        );
+                        roleTransfer.run(creep, source_t, target_t_important);
+                    } else roleTransfer.run(creep, source_t, target_t);
+                } else roleTransfer.run(creep, source_t, target_t);
             }
 
-            if (creep.memory.role == "remote_harvester") {
+            if (
+                creep.memory.role == "remote_harvester" ||
+                creep.memory.role == "remote_harvester2"
+            ) {
                 roleRemoteTranfer.run(creep);
             }
             if (creep.memory.role == "puller") {

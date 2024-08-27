@@ -124,7 +124,7 @@ class creep_factory {
         energy_to_use = this.energy_capacity;
         console.log(
           TAG +
-            `Wornging: erengy_plan:${config.energy_plan} is to huge using room_energy_capacity:${this.energy_capacity} `,
+          `Wornging: erengy_plan:${config.energy_plan} is to huge using room_energy_capacity:${this.energy_capacity} `,
         );
       } else {
         energy_to_use = config.energy_plan;
@@ -134,7 +134,7 @@ class creep_factory {
     } else {
       console.log(
         TAG +
-          `Error: config_plan:{${config.energy_plan}} is not in [Number ,'capacity','available']`,
+        `Error: config_plan:{${config.energy_plan}} is not in [Number ,'capacity','available']`,
       );
       return;
     }
@@ -163,7 +163,7 @@ class creep_factory {
           if (body_type_x == body_type_y) {
             array.push(
               this.creep_body.body_cost[body_type_x] *
-                (1 - total_cost / body_part[body_type_x].cost),
+              (1 - total_cost / body_part[body_type_x].cost),
             );
           } else {
             array.push(this.creep_body.body_cost[body_type_x]);
@@ -198,7 +198,7 @@ class creep_factory {
     if (Object.keys(this.creep_body.body) == 0) {
       console.log(
         TAG +
-          `There is something errer\n${this.creep_body}\ncreep_role:${config.role}`,
+        `There is something errer\n${this.creep_body}\ncreep_role:${config.role}`,
       );
       this.creep_body;
     }

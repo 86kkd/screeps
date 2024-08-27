@@ -1,3 +1,4 @@
+const TAG = "builder :";
 const roleBuilder = {
   /**
    * @param {Creep} creep
