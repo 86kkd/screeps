@@ -12,10 +12,7 @@ const roleTransfer = {
     ) {
       creep.memory.working = true;
     }
-    console.log(TAG + `roleTransfer:${source_target}`);
-    console.log(TAG + `${trans_target}`);
     if (!creep.memory.working) {
-      console.log(TAG + `${creep.withdraw(source_target, RESOURCE_ENERGY)}`);
       if (creep.withdraw(source_target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         creep.moveTo(source_target, {
           reusePath: 10,

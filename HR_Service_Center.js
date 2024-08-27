@@ -145,7 +145,7 @@ class HRSC {
                     },
                 });
                 source_t_unsort.sort((a, b) =>
-                    a[RESOURCE_ENERGY] > b[RESOURCE_ENERGY]
+                    a[RESOURCE_ENERGY] < b[RESOURCE_ENERGY]
                 );
                 let source_t;
                 if (source_t_unsort.length) {
@@ -171,8 +171,7 @@ class HRSC {
                     })[0];
                 }
 
-                console.log(TAG, "source_t:", source_t);
-                const target_t = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                const target_t = creep.room.find(FIND_STRUCTURES, {
                     filter: (constructor) => {
                         return (constructor.structureType ==
                                 STRUCTURE_EXTENSION ||
@@ -183,7 +182,7 @@ class HRSC {
                             constructor.store.getFreeCapacity(RESOURCE_ENERGY) >
                                 0;
                     },
-                });
+                })[0];
                 if (
                     target_t.structureType != STRUCTURE_SPAWN ||
                     target_t.structureType != STRUCTURE_EXTENSION
@@ -204,9 +203,6 @@ class HRSC {
                         },
                     );
                     if (target_t_important) {
-                        console.log(
-                            TAG + target_t_important,
-                        );
                         roleTransfer.run(creep, source_t, target_t_important);
                     } else roleTransfer.run(creep, source_t, target_t);
                 } else roleTransfer.run(creep, source_t, target_t);

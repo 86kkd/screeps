@@ -35,13 +35,6 @@ const roleRecycler = {
             (creep.store.getFreeCapacity() == creep.store.getCapacity() ||
                 if_can_carry())
         ) {
-            console.log(TAG + "recycler droped resources:" + source_targets);
-            console.log(
-                TAG +
-                    "resources in range:" +
-                    (creep.withdraw(source_targets, RESOURCE_ENERGY) + " or " +
-                        (creep.pickup(source_targets, RESOURCE_ENERGY))),
-            );
             if (
                 creep.withdraw(source_targets, RESOURCE_ENERGY) ==
                     ERR_NOT_IN_RANGE ||
