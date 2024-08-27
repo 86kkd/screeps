@@ -9,18 +9,28 @@ const roleRemoteHarvester = {
    */
   run: function (creep) {
     creep.say("🗺️");
-    // creep.say(creep.room);
-    // if (creep.room != creep.memory.room) {
-    //   const result = creep.moveTo(new RoomPosition(37, 7, "W7N3"), {
-    //     visualizePathStyle: { stroke: "#ffaa00" },
-    //   });
-    //   creep.say(result);
-    // }
-
     const source_id = creep.memory.destinationId;
     const source = Game.getObjectById(source_id);
-    console.log(TAG + source);
-    console.log(TAG + creep.harvest(source));
+    if (!creep.memory.source_id) {
+      creep.harvest(source);
+    }
+    if (creep.store.getFreeCapacity() == 0) {
+      const target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+        filter: (structure) => {
+          return structure.structureType == STRUCTURE_CONTAINER;
+        },
+      });
+      if (
+        creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE &&
+        !creep.memory.source_id
+      ) {
+        creep.memory.source_id = creep.memory.destinationId;
+        creep.memory.destinationId = target.id;
+      }
+    } else if (creep.memory.source_id) {
+      creep.memory.destinationId = creep.memory.source_id;
+      delete creep.memory.source_id;
+    }
   },
 };
 

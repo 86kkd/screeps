@@ -7,10 +7,10 @@ const rolePuller = {
    * @param {Creep} creep
    * @param {Creep} creep_to_pull
    */
-  run: function (creep) {
+  run: function(creep) {
     // creep.say("👟");
     const target = creep.pos.findClosestByRange(FIND_MY_CREEPS, {
-      filter: function (object) {
+      filter: function(object) {
         return (object.ticksToLive > 0 &&
           object.getActiveBodyparts(MOVE) == 0) &&
           object.memory.destinationId &&
@@ -18,7 +18,6 @@ const rolePuller = {
       },
     });
 
-    console.log(TAG + `creep target:${target}`);
     if (target) {
       if (creep.pull(target) == ERR_NOT_IN_RANGE) {
         creep.moveTo(target);
@@ -31,6 +30,34 @@ const rolePuller = {
         } else {
           creep.moveTo(Game.getObjectById(target.memory.destinationId));
         }
+      }
+    } else {
+      const targets = creep.pos.findInRange(FIND_CREEPS, 2);
+      console.log(TAG, targets.length);
+      if (targets.length > 0) {
+        const direction = creep.pos.getDirectionTo(targets[0]);
+        const get_unti_direction = (direction) => {
+          switch (direction) {
+            case TOP:
+              return BOTTOM;
+            case BOTTOM:
+              return TOP;
+            case RIGHT:
+              return LEFT;
+            case LEFT:
+              return RIGHT;
+            case TOP_RIGHT:
+              return BOTTOM_LEFT;
+            case TOP_LEFT:
+              return BOTTOM_RIGHT;
+            case BOTTOM_RIGHT:
+              return TOP_LEFT;
+            case BOTTOM_LEFT:
+              return TOP_RIGHT;
+          }
+        };
+        console.log(TAG, direction);
+        console.log(TAG, creep.move(get_unti_direction(direction)));
       }
     }
   },

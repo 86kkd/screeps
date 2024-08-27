@@ -17,8 +17,8 @@ const config = {
       work: 0.5,
     },
     role: "upgrader",
-    energy_plan: 500,
-    count: 4,
+    energy_plan: 2000,
+    count: 3,
     memory: {},
   },
 
@@ -30,7 +30,7 @@ const config = {
     },
     role: "builder",
     energy_plan: 3000,
-    count: 0,
+    count: 1,
     memory: {},
   },
 
@@ -41,8 +41,8 @@ const config = {
       work: 0.5,
     },
     role: "recycler",
-    energy_plan: 300,
-    count: 2,
+    energy_plan: 1000,
+    count: 1,
     memory: {},
   },
 
@@ -52,13 +52,14 @@ const config = {
       carry: 0.6,
     },
     role: "transfer",
-    energy_plan: 500,
+    energy_plan: 3000,
     count: 2,
     memory: {},
   },
   remote_harvester: {
     body_cost_assign: {
-      work: 1,
+      work: 0.5,
+      carry: 0.5,
     },
     role: "remote_harvester",
     energy_plan: 1000,
@@ -67,7 +68,8 @@ const config = {
   },
   remote_harvester2: {
     body_cost_assign: {
-      work: 1,
+      work: 0.5,
+      carry: 0.5,
     },
     role: "remote_harvester2",
     energy_plan: 1000,
