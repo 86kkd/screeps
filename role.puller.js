@@ -12,7 +12,7 @@ const rolePuller = {
     const target = creep.pos.findClosestByRange(FIND_MY_CREEPS, {
       filter: function(object) {
         return (object.ticksToLive > 0 &&
-          object.getActiveBodyparts(MOVE) == 0) &&
+          (object.getActiveBodyparts(MOVE) == 0) || object.fatigue > 0) &&
           object.memory.destinationId &&
           !object.pos.isNearTo(Game.getObjectById(object.memory.destinationId));
       },
@@ -32,7 +32,7 @@ const rolePuller = {
         }
       }
     } else {
-      const targets = creep.pos.findInRange(FIND_MY_CREEPS, 2);
+      const targets = creep.pos.findInRange(FIND_MY_CREEPS, 1);
       const get_unti_direction = (direction) => {
         switch (direction) {
           case TOP:
@@ -52,14 +52,16 @@ const rolePuller = {
           case BOTTOM_LEFT:
             return TOP_RIGHT;
           default:
-            return null;
+            return 0;
         }
       };
-      for (let i = 0; i < targets.length; i++) {
+      for (let i = 1; i < targets.length; i++) {
         const direction = creep.pos.getDirectionTo(targets[i]);
+        console.log(TAG, direction);
+        if (!direction) continue;
         console.log(TAG, get_unti_direction(direction));
         const result = creep.move(get_unti_direction(direction));
-        console.log(result);
+        console.log(TAG, result);
         if (result == 0) break;
       }
     }
