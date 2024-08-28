@@ -57,12 +57,8 @@ const rolePuller = {
       };
       for (let i = 1; i < targets.length; i++) {
         const direction = creep.pos.getDirectionTo(targets[i]);
-        console.log(TAG, direction);
         if (!direction) continue;
-        console.log(TAG, get_unti_direction(direction));
-        const result = creep.move(get_unti_direction(direction));
-        console.log(TAG, result);
-        if (result == 0) break;
+        if (creep.move(get_unti_direction(direction)) == OK) break;
       }
     }
   },
