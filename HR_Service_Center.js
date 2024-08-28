@@ -49,7 +49,7 @@ class HRSC {
                 structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) ||
                 (structure.structureType == STRUCTURE_TOWER &&
                     structure.store.getFreeCapacity(RESOURCE_ENERGY) >
-                        200);
+                    200);
         };
         const global_store_struct = room.find(FIND_STRUCTURES, {
             filter: (structure) => {
@@ -73,11 +73,14 @@ class HRSC {
         }
 
         for (const creep in Memory.creeps) {
-            if (!Object.keys(Game.creeps).includes(creep)) {
+            if (
+                !Object.keys(Game.creeps).includes(creep)
+                // !Game.creeps[creep].spawning
+            ) {
                 delete Memory.creeps[creep];
                 console.log(
                     TAG +
-                        `Info delete unused Mesory(${creep})`,
+                    `Info delete unused Mesory(${creep})`,
                 );
             }
         }
@@ -145,8 +148,9 @@ class HRSC {
                     },
                 });
                 source_t_unsort.sort((a, b) =>
-                    a[RESOURCE_ENERGY] < b[RESOURCE_ENERGY]
+                    a[RESOURCE_ENERGY] > b[RESOURCE_ENERGY]
                 );
+                console.log(TAG, source_t_unsort);
                 let source_t;
                 if (source_t_unsort.length) {
                     source_t = source_t_unsort[0];
@@ -154,33 +158,43 @@ class HRSC {
                     creep.room.find(FIND_STRUCTURES, {
                         filter: (constructor) => {
                             return (constructor.structureType ==
-                                    STRUCTURE_SPAWN ||
+                                STRUCTURE_SPAWN ||
                                 constructor.structureType ==
-                                    STRUCTURE_EXTENSION) &&
+                                STRUCTURE_EXTENSION) &&
                                 constructor.store.getFreeCapacity(
-                                        RESOURCE_ENERGY,
-                                    ) > 0;
+                                    RESOURCE_ENERGY,
+                                ) > 0;
                         },
                     }).length
                 ) {
                     source_t = creep.room.find(FIND_STRUCTURES, {
                         filter: (constructor) => {
                             return constructor.structureType ==
-                                STRUCTURE_STORAGE;
+                                STRUCTURE_STORAGE &&
+                                constructor.store[RESOURCE_ENERGY] > 0;
                         },
                     })[0];
+                    if (!source_t) {
+                        source_t = creep.room.find(FIND_STRUCTURES, {
+                            filter: (constructor) => {
+                                return constructor.structureType ==
+                                    STRUCTURE_CONTAINER &&
+                                    constructor.store[RESOURCE_ENERGY] > 0;
+                            },
+                        })[0];
+                    }
                 }
 
                 const target_t = creep.room.find(FIND_STRUCTURES, {
                     filter: (constructor) => {
                         return (constructor.structureType ==
-                                STRUCTURE_EXTENSION ||
+                            STRUCTURE_EXTENSION ||
                             constructor.structureType == STRUCTURE_SPAWN ||
                             constructor.structureType == STRUCTURE_NUKER ||
                             constructor.structureType == STRUCTURE_TOWER ||
                             constructor.structureType == STRUCTURE_STORAGE) &&
                             constructor.store.getFreeCapacity(RESOURCE_ENERGY) >
-                                0;
+                            0;
                     },
                 })[0];
                 if (
@@ -192,13 +206,13 @@ class HRSC {
                         {
                             filter: (constructor) => {
                                 return (constructor.structureType ==
-                                        STRUCTURE_EXTENSION ||
+                                    STRUCTURE_EXTENSION ||
                                     constructor.structureType ==
-                                        STRUCTURE_SPAWN) &&
+                                    STRUCTURE_SPAWN) &&
                                     constructor.store.getFreeCapacity(
-                                            RESOURCE_ENERGY,
-                                        ) >
-                                        0;
+                                        RESOURCE_ENERGY,
+                                    ) >
+                                    0;
                             },
                         },
                     );
