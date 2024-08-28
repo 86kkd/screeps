@@ -123,8 +123,6 @@ class HRSC {
                     roleRecycler.run(creep, room_ruins[0]);
                 } else if (room_tombstones.length) {
                     roleRecycler.run(creep, room_tombstones[0]);
-                } else if (global_store_struct.length) {
-                    roleHarvester.run(creep, room_source[0], store_filter);
                 } else if (construct_set.length) {
                     roleBuilder.run(creep, room_source[0]);
                 } else {
@@ -141,16 +139,15 @@ class HRSC {
             if (creep.memory.role == "transfer") {
                 const source_t_unsort = creep.room.find(FIND_STRUCTURES, {
                     filter: (constructor) => {
-                        return (
-                            constructor.structureType == STRUCTURE_CONTAINER
-                        ) &&
+                        return constructor.structureType ===
+                            STRUCTURE_CONTAINER &&
                             constructor.store[RESOURCE_ENERGY] > 0;
                     },
                 });
-                source_t_unsort.sort((a, b) =>
-                    a[RESOURCE_ENERGY] > b[RESOURCE_ENERGY]
-                );
-                console.log(TAG, source_t_unsort);
+                source_t_unsort.sort((a, b) => {
+                    return b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY];
+                });
+
                 let source_t;
                 if (source_t_unsort.length) {
                     source_t = source_t_unsort[0];
@@ -187,16 +184,22 @@ class HRSC {
 
                 const target_t = creep.room.find(FIND_STRUCTURES, {
                     filter: (constructor) => {
-                        return (constructor.structureType ==
+                        return ((constructor.structureType ==
                             STRUCTURE_EXTENSION ||
                             constructor.structureType == STRUCTURE_SPAWN ||
                             constructor.structureType == STRUCTURE_NUKER ||
-                            constructor.structureType == STRUCTURE_TOWER ||
                             constructor.structureType == STRUCTURE_STORAGE) &&
                             constructor.store.getFreeCapacity(RESOURCE_ENERGY) >
-                            0;
+                            0) ||
+                            (constructor.structureType == STRUCTURE_TOWER &&
+                                constructor.store.getFreeCapacity(
+                                    RESOURCE_ENERGY,
+                                ) > 200);
                     },
-                })[0];
+                }).sort((a, b) =>
+                    a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]
+                )[0];
+
                 if (
                     target_t.structureType != STRUCTURE_SPAWN ||
                     target_t.structureType != STRUCTURE_EXTENSION
