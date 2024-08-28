@@ -8,7 +8,7 @@ const rolePuller = {
    * @param {Creep} creep_to_pull
    */
   run: function(creep) {
-    // creep.say("👟");
+    creep.say("🚂");
     const target = creep.pos.findClosestByRange(FIND_MY_CREEPS, {
       filter: function(object) {
         return (object.ticksToLive > 0 &&
