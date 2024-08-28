@@ -3,15 +3,17 @@ const roleTransfer = {
   /**
    * @param {Creep} creep
    * @param {(StructureStorage|StructureContainer)} source_target */
-  run: function (creep, source_target, trans_target) {
+  run: function(creep, source_target, trans_target) {
     if (creep.memory.working && creep.store[RESOURCE_ENERGY] == 0) {
       creep.memory.working = false;
     }
     if (
-      !creep.memory.working && creep.store.getFreeCapacity(RESOURCE_ENERGY) == 0
+      !creep.memory.working &&
+      (creep.store.getFreeCapacity(RESOURCE_ENERGY) == 0 || !source_target)
     ) {
       creep.memory.working = true;
     }
+    creep.say("🚚");
     if (!creep.memory.working) {
       if (creep.withdraw(source_target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         creep.moveTo(source_target, {
