@@ -33,29 +33,34 @@ const rolePuller = {
       }
     } else {
       const targets = creep.pos.findInRange(FIND_MY_CREEPS, 2);
-      if (targets.length > 0) {
-        const direction = creep.pos.getDirectionTo(targets[0]);
-        const get_unti_direction = (direction) => {
-          switch (direction) {
-            case TOP:
-              return BOTTOM;
-            case BOTTOM:
-              return TOP;
-            case RIGHT:
-              return LEFT;
-            case LEFT:
-              return RIGHT;
-            case TOP_RIGHT:
-              return BOTTOM_LEFT;
-            case TOP_LEFT:
-              return BOTTOM_RIGHT;
-            case BOTTOM_RIGHT:
-              return TOP_LEFT;
-            case BOTTOM_LEFT:
-              return TOP_RIGHT;
-          }
-        };
-        creep.move(get_unti_direction(direction));
+      const get_unti_direction = (direction) => {
+        switch (direction) {
+          case TOP:
+            return BOTTOM;
+          case BOTTOM:
+            return TOP;
+          case RIGHT:
+            return LEFT;
+          case LEFT:
+            return RIGHT;
+          case TOP_RIGHT:
+            return BOTTOM_LEFT;
+          case TOP_LEFT:
+            return BOTTOM_RIGHT;
+          case BOTTOM_RIGHT:
+            return TOP_LEFT;
+          case BOTTOM_LEFT:
+            return TOP_RIGHT;
+          default:
+            return null;
+        }
+      };
+      for (let i = 0; i < targets.length; i++) {
+        const direction = creep.pos.getDirectionTo(targets[i]);
+        console.log(TAG, get_unti_direction(direction));
+        const result = creep.move(get_unti_direction(direction));
+        console.log(result);
+        if (result == 0) break;
       }
     }
   },
