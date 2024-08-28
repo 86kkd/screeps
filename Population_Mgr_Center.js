@@ -15,7 +15,8 @@ const get_creeps_cout = (role, mother) => {
     const creep = Game.creeps[name];
     if (
       creep.memory.role == role &&
-      creep.memory.mother == mother
+      creep.memory.mother == mother &&
+      creep.ticksToLive > creep.memory.needTime
     ) num++;
   }
   return num;
@@ -233,6 +234,16 @@ class creep_factory {
     let result;
     let number = 0;
     const count = config.count;
+    if (this.spawn.spawning != null) {
+      const name = this.spawn.spawning.name;
+      if (!Memory.creeps[name].needTime) {
+        Memory.creeps[name].needTime = this.spawn.spawning.needTime;
+        console.log(TAG, "need time:", Memory.creeps[name].needTime);
+        return;
+      } else {
+        return;
+      }
+    }
 
     if (get_creeps_cout(config.role, this.spawn_name) < count) {
       // config creep body
@@ -267,6 +278,7 @@ class creep_factory {
         );
         console.log(TAG + `spawn result:${result}`);
         console.log(TAG + `creep body:${this.creep_body}`);
+
         number++;
       } while (result == ERR_NAME_EXISTS);
     }

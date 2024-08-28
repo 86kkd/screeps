@@ -32,8 +32,7 @@ const rolePuller = {
         }
       }
     } else {
-      const targets = creep.pos.findInRange(FIND_CREEPS, 2);
-      console.log(TAG, targets.length);
+      const targets = creep.pos.findInRange(FIND_MY_CREEPS, 2);
       if (targets.length > 0) {
         const direction = creep.pos.getDirectionTo(targets[0]);
         const get_unti_direction = (direction) => {
@@ -56,8 +55,7 @@ const rolePuller = {
               return TOP_RIGHT;
           }
         };
-        console.log(TAG, direction);
-        console.log(TAG, creep.move(get_unti_direction(direction)));
+        creep.move(get_unti_direction(direction));
       }
     }
   },
