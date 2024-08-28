@@ -7,8 +7,8 @@ const roleRemoteHarvester = {
    * @param {Creep} creep
    * @param {Id} source_id
    */
-  run: function (creep) {
-    creep.say("🗺️");
+  run: function(creep) {
+    creep.say("⛏️");
     const source_id = creep.memory.destinationId;
     const source = Game.getObjectById(source_id);
     if (!creep.memory.source_id) {

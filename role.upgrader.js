@@ -1,20 +1,18 @@
 const roleUpgrader = {
   /** @param {Creep} creep **/
-  run: function (creep, source) {
+  run: function(creep, source) {
     if (creep.memory.working && creep.store[RESOURCE_ENERGY] == 0) {
       creep.memory.working = false;
     }
     if (!creep.memory.working && creep.store.getFreeCapacity() == 0) {
       creep.memory.working = true;
     }
-
+    creep.say("⬆️");
     if (creep.memory.working) {
       if (
         creep.upgradeController(creep.room.controller) ==
-          ERR_NOT_IN_RANGE
+        ERR_NOT_IN_RANGE
       ) {
-        creep.say("⬆️");
-
         creep.moveTo(creep.room.controller, {
           visualizePathStyle: { stroke: "#ffffff" },
         });
