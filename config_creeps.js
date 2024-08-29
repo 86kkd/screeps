@@ -17,13 +17,8 @@ const config = {
       work: 0.5,
     },
     role: "upgrader",
-<<<<<<< HEAD
     energy_plan: 4000,
     count: 1,
-=======
-    energy_plan: 2000,
-    count: 0,
->>>>>>> master
     memory: {},
   },
 
@@ -69,7 +64,7 @@ const config = {
     role: "remote_harvester",
     energy_plan: 1000,
     count: 1,
-    memory: { destinationId: "5bbcab5d9099fc012e6335df" },
+    memory: { destinationId: "26f20772347f879" },
   },
   remote_harvester2: {
     body_cost_assign: {
@@ -79,7 +74,7 @@ const config = {
     role: "remote_harvester2",
     energy_plan: 1000,
     count: 1,
-    memory: { destinationId: "5bbcab5d9099fc012e6335e0" },
+    memory: { destinationId: "71ac0772347ffe6" },
   },
   puller: {
     body_cost_assign: {
