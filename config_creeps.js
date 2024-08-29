@@ -42,7 +42,7 @@ const config = {
     },
     role: "recycler",
     energy_plan: 4000,
-    count: 0,
+    count: 1,
     memory: {},
   },
 
