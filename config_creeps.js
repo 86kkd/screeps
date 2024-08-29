@@ -18,7 +18,7 @@ const config = {
     },
     role: "upgrader",
     energy_plan: 4000,
-    count: 1,
+    count: 0,
     memory: {},
   },
 
@@ -42,7 +42,7 @@ const config = {
     },
     role: "recycler",
     energy_plan: 4000,
-    count: 1,
+    count: 0,
     memory: {},
   },
 
