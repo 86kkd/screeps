@@ -18,7 +18,7 @@ const config = {
     },
     role: "upgrader",
     energy_plan: 4000,
-    count: 0,
+    count: 2,
     memory: {},
   },
 
