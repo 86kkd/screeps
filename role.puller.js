@@ -16,7 +16,7 @@ const rolePuller = {
     const target = creep.pos.findClosestByRange(FIND_MY_CREEPS, {
       filter: function (object) {
         return (object.ticksToLive > 0 &&
-          (object.getActiveBodyparts(MOVE) == 0)) &&
+          (object.getActiveBodyparts(MOVE) == 0 || object.filter > 0)) &&
           object.memory.destinationId &&
           !object.pos.isNearTo(Game.getObjectById(object.memory.destinationId));
       },
